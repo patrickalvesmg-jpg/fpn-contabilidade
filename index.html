@@ -245,10 +245,10 @@ footer a:hover{color:var(--verde)}
   .banner .cover-line{font-size:.92rem}
   .founder-badge{left:12px;bottom:16px;padding:12px 15px;gap:10px}
   .founder-badge .avatar{width:44px;height:44px}
-  /* botão flutuante WhatsApp — no mobile vira pill com texto, bem visível de cara */
-  .wa{right:16px;left:auto;bottom:calc(16px + env(safe-area-inset-bottom));width:auto;height:56px;border-radius:999px;padding:0 22px 0 18px;gap:10px;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 30px rgba(37,211,102,.5)}
-  .wa svg{width:28px;height:28px}
-  .wa .wa-text{display:inline;color:#fff;font-weight:800;font-size:1rem;white-space:nowrap}
+  /* botão flutuante WhatsApp — só o ícone no mobile (compacto, não ocupa a tela) */
+  .wa{right:16px;bottom:calc(16px + env(safe-area-inset-bottom));width:56px;height:56px}
+  .wa svg{width:32px;height:32px}
+  .wa .wa-text{display:none}
 }
 </style>
 </head>
