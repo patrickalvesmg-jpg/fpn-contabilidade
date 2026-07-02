@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#0B244D" />
+<meta name="format-detection" content="telephone=no" />
+<title>Contador em Cabedelo | FPN Contabilidade Estratégica</title>
+<meta name="description" content="Contador em Cabedelo: contabilidade estratégica que reduz impostos e faz sua empresa crescer com segurança. Abertura de empresa, troca de contador e consultoria em Cabedelo e toda a Grande João Pessoa. Fale no WhatsApp." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --azul:#123B7A; --azul-escuro:#0B244D; --azul-abissal:#071A38;
+  --verde:#A7CF46; --verde-claro:#B6DE55;
+  --branco:#FFFFFF; --cinza:#F6F8FB; --cinza-borda:#E5E7EB;
+  --texto:#1D2939; --texto-suave:#667085; --muted:#EAF2FF;
+  --sombra:0 24px 70px rgba(11,36,77,.16); --sombra-sm:0 8px 24px rgba(11,36,77,.10);
+  --max:1200px; --display:'Fraunces',Georgia,serif; --body:'Plus Jakarta Sans',system-ui,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);color:var(--texto);background:var(--branco);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+.container{width:min(100% - 40px,var(--max));margin-inline:auto}
+.p120{padding:120px 0}
+.suptitle{display:inline-flex;align-items:center;gap:10px;font-size:.8rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--azul)}
+.suptitle::before{content:"";width:40px;height:2px;background:var(--verde)}
+.suptitle.right::before{order:0}
+.suptitle.light{color:var(--verde)}
+h1,h2,h3,h4,h5{font-family:var(--display);font-weight:600;line-height:1.1;letter-spacing:-.02em;color:var(--azul-escuro)}
+.thin{font-weight:300;font-style:italic;opacity:.85}
+.muted{color:#fff}
+.h1{font-size:clamp(2.4rem,5.4vw,4.2rem)}
+
+/* animações (espelhando mil-up / mil-scale da referência) */
+.up{opacity:0;transform:translateY(44px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
+.up.in{opacity:1;transform:none}
+.scale-frame{overflow:hidden;border-radius:24px}
+.scale-frame img{will-change:transform;transition:transform .1s linear}
+
+/* blobs decorativos animados (mil-animation) */
+.anim-frame{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.blob{position:absolute;border-radius:50%;background:radial-gradient(circle at 30% 30%,rgba(167,207,70,.30),transparent 62%);filter:blur(6px);will-change:transform}
+
+/* botões */
+.btn{display:inline-flex;align-items:center;gap:12px;border-radius:999px;padding:16px 30px;font-weight:700;font-size:.98rem;cursor:pointer;transition:transform .28s cubic-bezier(.2,.8,.2,1),box-shadow .28s,background .28s;border:1.5px solid transparent}
+.btn .arrow{width:34px;height:34px;border-radius:50%;background:var(--azul-escuro);display:grid;place-items:center;transition:transform .28s}
+.btn:hover .arrow{transform:translateX(4px)}
+.btn-primary{background:var(--verde);color:var(--azul-escuro);box-shadow:0 16px 34px rgba(167,207,70,.34)}
+.btn-primary:hover{transform:translateY(-3px);background:var(--verde-claro)}
+.btn-primary .arrow svg{stroke:var(--verde)}
+.btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.3)}
+.btn-ghost:hover{background:rgba(255,255,255,.1);transform:translateY(-3px)}
+.link-arrow{display:inline-flex;align-items:center;gap:10px;font-weight:700;color:#fff}
+.link-arrow .arrow{width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(255,255,255,.35);display:grid;place-items:center;transition:.28s}
+.link-arrow:hover .arrow{background:var(--verde);border-color:var(--verde);transform:translateX(4px)}
+
+/* header */
+header{position:sticky;top:0;z-index:70;background:rgba(7,26,56,.85);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.08)}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:16px 0}
+.logo{display:flex;align-items:center;gap:12px}
+.logo-mark{width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,var(--azul),var(--verde));color:#fff;display:grid;place-items:center;font-family:var(--display);font-weight:700;font-size:1.05rem}
+.logo b{color:#fff;font-weight:800;font-size:1.05rem}
+.logo small{display:block;color:rgba(255,255,255,.6);font-size:.7rem;font-weight:500}
+.nav-links{display:flex;gap:32px;font-weight:600;font-size:.94rem}
+.nav-links a{color:rgba(255,255,255,.85);transition:color .2s}
+.nav-links a:hover{color:var(--verde)}
+.nav .btn{padding:11px 22px;font-size:.9rem}
+
+/* ===== BANNER / HERO (mil-banner mil-dark-bg) ===== */
+.banner{position:relative;background:radial-gradient(1200px 700px at 80% -10%,#1a4a92,var(--azul-escuro) 44%,var(--azul-abissal));color:#fff;padding:120px 0 130px;overflow:hidden}
+.banner::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.055) 1px,transparent 1px);background-size:26px 26px;mask-image:linear-gradient(to bottom,#000,transparent 85%)}
+.banner .container{position:relative}
+.banner-content{max-width:860px}
+.banner h1{color:#fff;margin:26px 0 22px}
+.banner h1 .g{color:var(--verde);font-style:italic;font-weight:500}
+.banner-lead{color:rgba(255,255,255,.82);font-size:1.15rem;max-width:600px;margin-bottom:26px}
+.rating-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;color:rgba(255,255,255,.85);font-size:.98rem;margin-bottom:30px}
+.rating-row .stars{color:var(--verde);letter-spacing:2px;font-size:1.05rem}
+.rating-row b{color:#fff;font-weight:700}
+.banner .actions{display:flex;gap:28px;align-items:center;flex-wrap:wrap}
+.micro-trust{margin-top:16px;color:rgba(255,255,255,.6);font-size:.88rem;display:flex;align-items:center;gap:8px}
+.micro-trust::before{content:"✓";color:var(--verde);font-weight:800}
+.banner .cover-line{margin-top:60px;color:rgba(255,255,255,.7);font-size:1.05rem;font-weight:500;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.banner .cover-line b{color:#fff;font-weight:700}
+.pin{display:inline-flex;align-items:center;gap:6px;background:rgba(167,207,70,.14);color:var(--verde);padding:6px 14px;border-radius:999px;font-size:.85rem;font-weight:700}
+
+/* ===== PROBLEMA (PAS) ===== */
+.problema{background:var(--cinza)}
+.center{text-align:center}
+.pain-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.pain{display:flex;align-items:flex-start;gap:14px;background:#fff;border:1px solid var(--cinza-borda);border-radius:16px;padding:24px 24px;transition:transform .28s,box-shadow .28s}
+.pain:hover{transform:translateY(-4px);box-shadow:var(--sombra-sm)}
+.pain-x{flex:0 0 26px;width:26px;height:26px;border-radius:50%;background:rgba(220,38,38,.1);color:#dc2626;display:grid;place-items:center;font-weight:800;font-size:.85rem;margin-top:2px}
+.pain p{font-size:.98rem;color:var(--texto);line-height:1.55}
+.pain-turn{text-align:center;font-family:var(--display);font-size:1.4rem;color:var(--azul-escuro);margin-top:44px;font-weight:600}
+
+/* ===== ABOUT (Quem somos) ===== */
+.about-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:70px;align-items:center}
+.about-text h2{font-size:clamp(2rem,4vw,2.9rem);margin-bottom:26px}
+.about-text p{color:var(--texto);margin-bottom:20px;font-size:1.06rem}
+.about-media{position:relative}
+.about-media .scale-frame{padding-bottom:125%;position:relative;background:linear-gradient(160deg,var(--azul),var(--azul-abissal))}
+.about-media .scale-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 20%}
+.about-media .scale-frame::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(7,26,56,.45),transparent 45%);pointer-events:none}
+.founder-badge{position:absolute;left:-24px;bottom:34px;background:#fff;border-radius:18px;padding:18px 22px;box-shadow:var(--sombra);display:flex;align-items:center;gap:14px}
+.founder-badge .avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--azul),var(--verde));color:#fff;display:grid;place-items:center;font-family:var(--display);font-weight:700}
+.founder-badge b{display:block;color:var(--azul-escuro);font-family:var(--display)}
+.founder-badge small{color:var(--texto-suave);font-size:.82rem}
+
+/* ===== ESPECIALIDADES (Para quem é) ===== */
+.section-head-row{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:50px}
+.section-head-row h2{font-size:clamp(1.9rem,4vw,2.9rem)}
+.section-head-row p{color:var(--texto-suave);font-size:1.1rem;max-width:360px}
+.esp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.esp-card{background:#fff;border:1px solid var(--cinza-borda);border-radius:20px;padding:34px 30px;transition:transform .32s cubic-bezier(.2,.8,.2,1),box-shadow .32s,border-color .32s;position:relative;overflow:hidden}
+.esp-card::before{content:"";position:absolute;left:0;top:0;width:100%;height:4px;background:var(--verde);transform:scaleX(0);transform-origin:left;transition:transform .35s}
+.esp-card:hover{transform:translateY(-8px);box-shadow:var(--sombra);border-color:transparent}
+.esp-card:hover::before{transform:scaleX(1)}
+.esp-card h4{font-size:1.24rem;margin-bottom:12px}
+.esp-card p{color:var(--texto-suave);font-size:.97rem;margin-bottom:22px}
+.card-link{display:inline-flex;align-items:center;gap:8px;font-weight:700;color:var(--azul);font-size:.92rem}
+.card-link svg{transition:transform .25s}
+.esp-card:hover .card-link svg{transform:translateX(4px)}
+
+/* ===== SERVIÇOS (dark) ===== */
+.services{position:relative;background:linear-gradient(160deg,var(--azul-escuro),var(--azul-abissal));color:#fff;overflow:hidden}
+.services .head-center{text-align:center;max-width:760px;margin:0 auto 70px}
+.services .head-center h2{color:#fff;font-size:clamp(2.2rem,5vw,3.4rem);margin:16px 0 30px}
+.serv-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid rgba(255,255,255,.12);border-radius:24px;overflow:hidden}
+.serv-card{padding:40px 30px;border-right:1px solid rgba(255,255,255,.12);border-bottom:1px solid rgba(255,255,255,.12);transition:background .3s;cursor:pointer;position:relative}
+.serv-card:hover{background:rgba(167,207,70,.08)}
+.serv-card .num{font-family:var(--display);color:var(--verde);font-size:.9rem;font-weight:700;margin-bottom:20px;display:block}
+.serv-card h5{color:#fff;font-size:1.15rem;margin-bottom:14px;line-height:1.25}
+.serv-card p{color:rgba(255,255,255,.7);font-size:.95rem}
+@media(min-width:993px){.serv-grid .serv-card:nth-child(4n){border-right:0}}
+
+/* ===== DEPOIMENTOS ===== */
+.depo{background:var(--cinza)}
+.depo .head-center{text-align:center;max-width:640px;margin:0 auto 56px}
+.depo .head-center h2{font-size:clamp(2rem,4vw,3rem)}
+.depo-track{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.depo-card{background:#fff;border:1px solid var(--cinza-borda);border-radius:22px;padding:34px;transition:transform .3s,box-shadow .3s}
+.depo-card:hover{transform:translateY(-6px);box-shadow:var(--sombra)}
+.q-icon{color:var(--verde);opacity:.9;margin-bottom:16px}
+.stars{color:var(--verde);letter-spacing:3px;margin-bottom:14px}
+.depo-card p{font-style:italic;color:var(--texto);margin-bottom:24px;font-size:1.02rem}
+.depo-who{display:flex;align-items:center;gap:14px}
+.depo-who .avatar{width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--azul),var(--verde));color:#fff;display:grid;place-items:center;font-family:var(--display);font-weight:700}
+.depo-who b{display:block;color:var(--azul-escuro);font-family:var(--display)}
+.depo-who small{color:var(--texto-suave);font-size:.85rem}
+
+/* ===== FAQ ===== */
+.faq-list{max-width:820px;margin:0 auto;display:grid;gap:14px}
+.faq-item{background:#fff;border:1px solid var(--cinza-borda);border-radius:16px;padding:6px 26px;transition:box-shadow .28s,border-color .28s}
+.faq-item[open]{box-shadow:var(--sombra-sm);border-color:transparent}
+.faq-item summary{list-style:none;cursor:pointer;font-family:var(--display);font-weight:600;font-size:1.12rem;color:var(--azul-escuro);padding:20px 0;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::after{content:"+";font-size:1.6rem;color:var(--verde);font-weight:400;transition:transform .28s;line-height:1}
+.faq-item[open] summary::after{transform:rotate(45deg)}
+.faq-item p{color:var(--texto-suave);font-size:1rem;padding:0 0 22px;line-height:1.65}
+
+/* ===== CTA / CONTATO ===== */
+.contact{position:relative;background:radial-gradient(900px 520px at 20% 120%,#1a4a92,var(--azul-escuro));color:#fff;overflow:hidden}
+.contact .anim-frame .blob{opacity:.7}
+.contact-inner{position:relative;text-align:center;max-width:720px;margin:0 auto}
+.contact h2{color:#fff;font-size:clamp(2.2rem,5vw,3.4rem);margin:18px 0 20px}
+.contact p{color:rgba(255,255,255,.82);font-size:1.15rem;margin-bottom:36px}
+.contact .actions{display:flex;gap:18px;justify-content:center;flex-wrap:wrap}
+
+/* footer */
+footer{background:var(--azul-abissal);color:rgba(255,255,255,.68);padding:70px 0 32px}
+.foot-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:44px;padding-bottom:44px;border-bottom:1px solid rgba(255,255,255,.1)}
+footer .logo b,footer .logo small{color:#fff}
+footer h6{color:#fff;font-family:var(--body);font-weight:700;margin-bottom:16px;font-size:1rem}
+footer a{display:block;padding:6px 0;transition:color .2s}
+footer a:hover{color:var(--verde)}
+.foot-bottom{padding-top:24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:.85rem}
+
+/* whatsapp float */
+.wa{position:fixed;right:22px;bottom:22px;z-index:90;width:64px;height:64px;border-radius:50%;background:#25D366;display:grid;place-items:center;box-shadow:0 12px 30px rgba(37,211,102,.45);animation:pulse 2.4s infinite;transition:transform .25s}
+.wa svg{width:36px;height:36px;display:block}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(37,211,102,.5)}70%{box-shadow:0 0 0 18px rgba(37,211,102,0)}100%{box-shadow:0 0 0 0 rgba(37,211,102,0)}}
+.wa:hover{transform:scale(1.08)}
+.wa:active{transform:scale(.96)}
+.wa .wa-text{display:none}
+
+/* ===== TABLET ===== */
+@media(max-width:992px){
+  .serv-grid{grid-template-columns:1fr 1fr}
+  .serv-card:nth-child(2n){border-right:0}
+  .about-grid{gap:44px}
+  .pain-grid{grid-template-columns:1fr 1fr}
+}
+
+/* ===== MOBILE ===== */
+@media(max-width:900px){
+  /* header NÃO fica fixo no mobile — rola junto com a página e some ao descer */
+  header{position:absolute;top:0;left:0;right:0;background:transparent;backdrop-filter:none;border-bottom:0}
+  .nav-links{display:none}
+  .nav .btn{display:none}          /* botão "Contato" do topo some no mobile */
+  .p120{padding:64px 0}
+  .nav{padding:14px 0}
+  .logo-mark{width:42px;height:42px;font-size:.95rem}
+  .logo small{font-size:.66rem}
+  .about-grid,.foot-grid{grid-template-columns:1fr}
+  .esp-grid,.depo-track,.pain-grid{grid-template-columns:1fr}
+  .pain-turn{font-size:1.2rem}
+  /* hero compacto: CTA do WhatsApp aparece já na primeira dobra */
+  .banner{padding:88px 0 64px}
+  .banner h1{margin:16px 0 18px}
+  .banner-lead{font-size:1.05rem;margin-bottom:20px}
+  .rating-row{margin-bottom:22px}
+  .banner .actions{gap:14px}
+  .banner .cover-line{margin-top:30px;font-size:.94rem}
+  .section-head-row{flex-direction:column;align-items:flex-start;gap:12px;margin-bottom:36px}
+  .about-media{max-width:420px;margin-inline:auto}
+  .about-media .scale-frame{padding-bottom:100%}
+  .founder-badge{left:16px;padding:14px 18px}
+  .head-center,.contact-inner{margin-bottom:0}
+  .services .head-center{margin-bottom:44px}
+  .depo .head-center{margin-bottom:36px}
+  /* CTAs full-width no mobile (facilita o toque) */
+  .banner .actions .btn,.contact .actions .btn{width:100%;justify-content:center}
+  .contact .actions,.banner .actions{width:100%}
+  .foot-bottom{flex-direction:column;gap:8px}
+}
+
+@media(max-width:560px){
+  .serv-grid{grid-template-columns:1fr}
+  .serv-card{border-right:0;padding:32px 26px}
+  .p120{padding:54px 0}
+  .h1{font-size:2rem;line-height:1.14}
+  .banner h1{font-size:2rem}
+  h2{font-size:1.7rem !important}
+  .about-text h2,.services .head-center h2,.depo .head-center h2,.contact h2,.section-head-row h2{font-size:1.7rem}
+  .btn{padding:15px 24px;font-size:.94rem}
+  .esp-card,.depo-card{padding:28px 24px}
+  .about-text p{font-size:1rem}
+  .banner .cover-line{font-size:.92rem}
+  .founder-badge{left:12px;bottom:16px;padding:12px 15px;gap:10px}
+  .founder-badge .avatar{width:44px;height:44px}
+  /* botão flutuante WhatsApp — só o ícone no mobile (compacto, não ocupa a tela) */
+  .wa{right:16px;bottom:calc(16px + env(safe-area-inset-bottom));width:56px;height:56px}
+  .wa svg{width:32px;height:32px}
+  .wa .wa-text{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="container nav">
+    <a href="#top" class="logo">
+      <div class="logo-mark">FPN</div>
+      <div><b>FPN Contabilidade</b><small>Cabedelo e Região</small></div>
+    </a>
+    <nav class="nav-links">
+      <a href="#about">Quem somos</a>
+      <a href="#especialidades">Para quem</a>
+      <a href="#services">Serviços</a>
+      <a href="#depoimentos">Depoimentos</a>
+      <a href="#faq">Dúvidas</a>
+    </nav>
+    <a href="#contato" class="btn btn-primary" style="gap:8px">Contato</a>
+  </div>
+</header>
+
+<div id="top"></div>
+
+<!-- ===== BANNER / HERO ===== -->
+<section class="banner">
+  <div class="anim-frame">
+    <span class="blob" data-speed="7" style="width:420px;height:420px;top:-120px;right:-80px"></span>
+    <span class="blob" data-speed="4" style="width:240px;height:240px;top:280px;left:-80px"></span>
+    <span class="blob" data-speed="2" style="width:150px;height:150px;bottom:40px;right:20%"></span>
+  </div>
+  <div class="container">
+    <div class="banner-content up">
+      <span class="suptitle light">Contador em Cabedelo e Região</span>
+      <h1 class="h1">Contador em <span class="g">Cabedelo</span> que reduz seus impostos e faz sua empresa crescer</h1>
+      <p class="banner-lead">Chega de contabilidade que só manda boleto e some. Cuidamos dos seus números com estratégia, respondemos no WhatsApp e mostramos, na prática, onde sua empresa pode economizar.</p>
+      <div class="rating-row">
+        <span class="stars">★★★★★</span>
+        <b>+200 empresas atendidas</b> em Cabedelo e região
+      </div>
+      <div class="actions">
+        <a href="https://wa.me/558398719090?text=Ol%C3%A1!%20Quero%20falar%20com%20um%20especialista%20da%20FPN%20Contabilidade." target="_blank" rel="noopener" class="btn btn-primary">Falar com um especialista
+          <span class="arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--verde)" stroke-width="2.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+        <a href="#services" class="link-arrow">Ver serviços
+          <span class="arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+      </div>
+      <p class="micro-trust">Diagnóstico inicial gratuito e sem compromisso · Resposta rápida no WhatsApp</p>
+      <div class="cover-line">
+        <span class="pin"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> Atendimento local</span>
+        Atendemos <b>Cabedelo e região</b> — João Pessoa, Bayeux, Santa Rita e demais cidades da Grande João Pessoa.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROBLEMA (PAS) ===== -->
+<section class="problema p120">
+  <div class="container">
+    <div class="section-head center" style="max-width:720px;margin:0 auto 48px">
+      <span class="suptitle up" style="justify-content:center">Você se identifica?</span>
+      <h2 class="up" style="margin-top:16px">Se a sua contabilidade te deixa no escuro, o problema não é você</h2>
+      <p class="up" style="color:var(--texto-suave);font-size:1.1rem;margin-top:14px">A maioria dos empresários de Cabedelo convive com dores que já viraram "normais" — mas não deveriam ser.</p>
+    </div>
+    <div class="pain-grid">
+      <div class="pain up"><span class="pain-x">✕</span><p>Só recebe o boleto do imposto e <b>nunca sabe se está pagando o valor certo</b>.</p></div>
+      <div class="pain up"><span class="pain-x">✕</span><p>Manda mensagem pro contador e <b>demora dias pra ter resposta</b> — quando tem.</p></div>
+      <div class="pain up"><span class="pain-x">✕</span><p>Recebe relatórios cheios de números que <b>você não entende</b> e não ajudam a decidir nada.</p></div>
+      <div class="pain up"><span class="pain-x">✕</span><p>Desconfia que <b>paga imposto demais</b>, mas ninguém nunca sentou pra revisar isso com você.</p></div>
+      <div class="pain up"><span class="pain-x">✕</span><p>Tem <b>medo da Reforma Tributária de 2026</b> e não faz ideia de como ela vai afetar seu negócio.</p></div>
+      <div class="pain up"><span class="pain-x">✕</span><p>Pensa em trocar de contador, mas <b>acha que vai dar trabalho</b> e adia isso há meses.</p></div>
+    </div>
+    <p class="pain-turn up">A FPN Contabilidade existe para virar esse jogo. 👇</p>
+  </div>
+</section>
+
+<!-- ===== ABOUT / QUEM SOMOS ===== -->
+<section id="about" class="p120">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text">
+        <span class="suptitle up">Quem somos</span>
+        <h2 class="up" style="margin-top:16px">Uma contabilidade que fala a língua do seu negócio</h2>
+        <p class="up">Na FPN Contabilidade, nossa missão vai além de cumprir obrigações. Somos uma equipe comprometida em transformar a forma como o empresário de Cabedelo e região enxerga a contabilidade — de um custo burocrático para uma ferramenta de crescimento.</p>
+        <p class="up">Liderada por Felipe Nunes, contador com passagem por grandes auditorias e vasta experiência de mercado, a FPN une técnica, tecnologia e atendimento humano para cuidar da saúde financeira da sua empresa.</p>
+        <a href="#contato" class="btn btn-primary up" style="margin-top:10px">Fale conosco
+          <span class="arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--verde)" stroke-width="2.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+      </div>
+      <div class="about-media up">
+        <div class="scale-frame"><img src="img/felipe-nunes.jpg" alt="Felipe Nunes, fundador da FPN Contabilidade" loading="lazy"></div>
+        <div class="founder-badge">
+          <div class="avatar">FN</div>
+          <div><b>Felipe Nunes</b><small>Fundador · Contador</small></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ESPECIALIDADES / PARA QUEM É ===== -->
+<section id="especialidades" class="p120" style="padding-top:0">
+  <div class="container">
+    <div class="section-head-row">
+      <div>
+        <span class="suptitle up">Para quem é nosso trabalho</span>
+        <h2 class="up" style="margin-top:16px">Atendemos empresas de todos os perfis em Cabedelo e região</h2>
+      </div>
+      <p class="up">Conheça as áreas de atuação da FPN Contabilidade:</p>
+    </div>
+    <div class="esp-grid">
+      <div class="esp-card up">
+        <h4>Contabilidade para MEIs</h4>
+        <p>Serviços contábeis especializados para Microempreendedores Individuais, com conformidade e organização financeira para o seu negócio.</p>
+        <a href="#contato" class="card-link">Saiba mais <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <div class="esp-card up">
+        <h4>Prestadores de Serviços</h4>
+        <p>Soluções contábeis sob medida para prestadores de serviços, garantindo controle financeiro e conformidade tributária.</p>
+        <a href="#contato" class="card-link">Saiba mais <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <div class="esp-card up">
+        <h4>Comércio e Varejo</h4>
+        <p>Contabilidade estratégica para lojas e comércios, com gestão de impostos e relatórios que ajudam você a vender com margem.</p>
+        <a href="#contato" class="card-link">Saiba mais <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <div class="esp-card up">
+        <h4>Profissionais da Saúde</h4>
+        <p>Cuide da saúde financeira do seu consultório ou clínica com contabilidade especializada para médicos e profissionais da saúde.</p>
+        <a href="#contato" class="card-link">Saiba mais <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <div class="esp-card up">
+        <h4>Negócios Digitais</h4>
+        <p>Contabilidade para infoprodutores e negócios digitais, com gestão eficiente e apoio ao crescimento do seu empreendimento online.</p>
+        <a href="#contato" class="card-link">Saiba mais <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <div class="esp-card up">
+        <h4>Consultorias e Direcionamentos</h4>
+        <p>Consultorias com direcionamentos estratégicos para otimizar a gestão financeira e tributária da sua empresa.</p>
+        <a href="#contato" class="card-link">Saiba mais <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SERVIÇOS (dark) ===== -->
+<section id="services" class="services p120">
+  <div class="anim-frame">
+    <span class="blob" data-speed="5" style="width:360px;height:360px;top:200px;right:-120px"></span>
+    <span class="blob" data-speed="3" style="width:220px;height:220px;top:80px;left:100px"></span>
+  </div>
+  <div class="container" style="position:relative">
+    <div class="head-center">
+      <span class="suptitle light up" style="justify-content:center">FPN: a melhor solução contábil para você</span>
+      <h2 class="up">Serviços oferecidos <span class="thin">para sua empresa</span></h2>
+      <a href="#contato" class="btn btn-primary up" style="margin-top:6px">Fale conosco
+        <span class="arrow"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--verde)" stroke-width="2.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+      </a>
+    </div>
+    <div class="serv-grid">
+      <div class="serv-card up"><span class="num">01</span><h5>Folha de Pagamento</h5><p>Gerenciamos sua folha com precisão, garantindo conformidade e tranquilidade com os colaboradores.</p></div>
+      <div class="serv-card up"><span class="num">02</span><h5>Apuração de Impostos e Planejamento Tributário</h5><p>Apuração correta e planejamento estratégico para maximizar sua economia fiscal, de forma legal.</p></div>
+      <div class="serv-card up"><span class="num">03</span><h5>Setor Contábil</h5><p>Sua contabilidade organizada e em conformidade com as normas, com relatórios que você entende.</p></div>
+      <div class="serv-card up"><span class="num">04</span><h5>Consultorias Contábil, Trabalhista e Tributária</h5><p>Direcionamento especializado para decisões seguras em cada área da sua empresa.</p></div>
+      <div class="serv-card up"><span class="num">05</span><h5>Abertura e Regularização de Empresas</h5><p>Abrimos seu CNPJ e regularizamos pendências com agilidade, no regime mais vantajoso.</p></div>
+      <div class="serv-card up"><span class="num">06</span><h5>Declaração de Imposto de Renda</h5><p>Declaração de IR de pessoas físicas e jurídicas, sem erro e sem dor de cabeça.</p></div>
+      <div class="serv-card up"><span class="num">07</span><h5>Troca de Contador</h5><p>Assumimos toda a migração do seu contador atual, sem interromper a sua operação.</p></div>
+      <div class="serv-card up"><span class="num">08</span><h5>Reforma Tributária 2026</h5><p>Preparamos sua empresa para o novo modelo de impostos (IBS + CBS) antes que ele te surpreenda.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== DEPOIMENTOS ===== -->
+<section id="depoimentos" class="depo p120">
+  <div class="container">
+    <div class="head-center">
+      <span class="suptitle up" style="justify-content:center">Saiba o que dizem de nossos serviços</span>
+      <h2 class="up" style="margin-top:16px">Depoimentos de <span class="thin">clientes</span></h2>
+    </div>
+    <div class="depo-track">
+      <div class="depo-card up">
+        <svg class="q-icon" width="40" height="40" viewBox="0 0 24 24" fill="currentColor"><path d="M9 7H5a1 1 0 00-1 1v4a1 1 0 001 1h3v3a3 3 0 01-3 3H4v2h1a5 5 0 005-5V8a1 1 0 00-1-1zm10 0h-4a1 1 0 00-1 1v4a1 1 0 001 1h3v3a3 3 0 01-3 3h-1v2h1a5 5 0 005-5V8a1 1 0 00-1-1z"/></svg>
+        <div class="stars">★★★★★</div>
+        <p>"Troquei de contador e foi a melhor decisão. Finalmente entendo pra onde vai o dinheiro da empresa e ainda reduzi imposto."</p>
+        <div class="depo-who"><div class="avatar">MC</div><div><b>Marcos C.</b><small>Comércio · Cabedelo</small></div></div>
+      </div>
+      <div class="depo-card up">
+        <svg class="q-icon" width="40" height="40" viewBox="0 0 24 24" fill="currentColor"><path d="M9 7H5a1 1 0 00-1 1v4a1 1 0 001 1h3v3a3 3 0 01-3 3H4v2h1a5 5 0 005-5V8a1 1 0 00-1-1zm10 0h-4a1 1 0 00-1 1v4a1 1 0 001 1h3v3a3 3 0 01-3 3h-1v2h1a5 5 0 005-5V8a1 1 0 00-1-1z"/></svg>
+        <div class="stars">★★★★★</div>
+        <p>"Abri minha empresa com a FPN e não tive nenhuma dor de cabeça. Explicaram tudo e cuidaram da parte chata pra mim."</p>
+        <div class="depo-who"><div class="avatar">JS</div><div><b>Juliana S.</b><small>Prestadora de serviço · Cabedelo</small></div></div>
+      </div>
+      <div class="depo-card up">
+        <svg class="q-icon" width="40" height="40" viewBox="0 0 24 24" fill="currentColor"><path d="M9 7H5a1 1 0 00-1 1v4a1 1 0 001 1h3v3a3 3 0 01-3 3H4v2h1a5 5 0 005-5V8a1 1 0 00-1-1zm10 0h-4a1 1 0 00-1 1v4a1 1 0 001 1h3v3a3 3 0 01-3 3h-1v2h1a5 5 0 005-5V8a1 1 0 00-1-1z"/></svg>
+        <div class="stars">★★★★★</div>
+        <p>"Atendimento rápido no WhatsApp, sempre que preciso tenho resposta. Contabilidade de verdade estratégica."</p>
+        <div class="depo-who"><div class="avatar">RA</div><div><b>Rafael A.</b><small>Clínica · Cabedelo</small></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ (objeções) ===== -->
+<section id="faq" class="faq p120">
+  <div class="container">
+    <div class="head-center" style="max-width:640px;margin:0 auto 50px">
+      <span class="suptitle up" style="justify-content:center">Ainda com dúvida?</span>
+      <h2 class="up" style="margin-top:16px">Perguntas que todo empresário faz antes de trocar de contador</h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item up" open>
+        <summary>Dá muito trabalho trocar de contador?</summary>
+        <p>Não. A FPN assume toda a migração para você — pedimos os documentos ao seu contador atual, organizamos tudo e colocamos sua empresa em dia. Você não fica sem atendimento em nenhum momento e não precisa lidar com a burocracia.</p>
+      </details>
+      <details class="faq-item up">
+        <summary>Vocês atendem Cabedelo e as cidades vizinhas?</summary>
+        <p>Sim. Atendemos Cabedelo e toda a Grande João Pessoa — João Pessoa, Bayeux, Santa Rita e demais cidades da Grande João Pessoa. E como trabalhamos de forma digital, você resolve tudo pelo WhatsApp, sem precisar se deslocar.</p>
+      </details>
+      <details class="faq-item up">
+        <summary>Como vocês reduzem os impostos da minha empresa?</summary>
+        <p>Fazemos um diagnóstico do seu enquadramento e do seu regime tributário para encontrar, dentro da lei, a forma mais econômica de tributar seu negócio. Muitas empresas pagam mais imposto do que precisam apenas por estarem no regime errado.</p>
+      </details>
+      <details class="faq-item up">
+        <summary>Minha empresa é pequena / sou MEI. Vale a pena?</summary>
+        <p>Sim. Atendemos desde MEIs e prestadores de serviço até empresas em crescimento. Cada perfil tem um plano adequado — e quanto mais cedo sua contabilidade for estratégica, mais você economiza no longo prazo.</p>
+      </details>
+      <details class="faq-item up">
+        <summary>E a Reforma Tributária de 2026, como fica?</summary>
+        <p>2026 é o ano de transição para o novo modelo (IBS + CBS). Cada empresa será impactada de um jeito. A FPN acompanha as mudanças e prepara sua contabilidade com antecedência, para você não ser pego de surpresa.</p>
+      </details>
+      <details class="faq-item up">
+        <summary>Quanto custa?</summary>
+        <p>O valor depende do porte e da necessidade da sua empresa. Por isso o primeiro passo é um diagnóstico gratuito no WhatsApp: entendemos seu caso e montamos uma proposta justa e transparente, sem compromisso.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTATO / CTA ===== -->
+<section id="contato" class="contact p120">
+  <div class="anim-frame">
+    <span class="blob" data-speed="4" style="width:360px;height:360px;bottom:-120px;left:-80px"></span>
+  </div>
+  <div class="container">
+    <div class="contact-inner up">
+      <span class="suptitle light" style="justify-content:center">Diagnóstico gratuito</span>
+      <h2>Descubra em 1 conversa quanto sua empresa pode economizar</h2>
+      <p>Fale agora com um especialista da FPN Contabilidade. Fazemos um diagnóstico gratuito da sua empresa em Cabedelo e região e mostramos, sem enrolação, onde você pode pagar menos imposto e crescer com segurança.</p>
+      <div class="actions">
+        <a href="https://wa.me/558398719090?text=Ol%C3%A1!%20Quero%20o%20diagn%C3%B3stico%20gratuito%20da%20FPN%20Contabilidade." target="_blank" rel="noopener" class="btn btn-primary">
+          <svg viewBox="0 0 32 32" width="22" height="22" fill="var(--azul-escuro)" aria-hidden="true"><path d="M16.001 3.2c-7.06 0-12.8 5.74-12.8 12.8 0 2.257.59 4.463 1.71 6.408L3.2 28.8l6.57-1.723a12.74 12.74 0 006.23 1.588h.005c7.06 0 12.8-5.74 12.8-12.8 0-3.42-1.332-6.635-3.751-9.053A12.716 12.716 0 0016.001 3.2zm0 23.44h-.004a10.63 10.63 0 01-5.42-1.484l-.389-.231-4.018 1.053 1.072-3.918-.253-.402a10.6 10.6 0 01-1.626-5.658c0-5.866 4.774-10.64 10.643-10.64a10.57 10.57 0 017.52 3.122 10.57 10.57 0 013.116 7.526c0 5.866-4.773 10.641-10.641 10.641zm5.834-7.969c-.32-.16-1.892-.933-2.185-1.04-.293-.107-.507-.16-.72.16-.213.32-.826 1.04-1.013 1.253-.187.213-.373.24-.693.08-.32-.16-1.35-.498-2.572-1.587-.95-.848-1.593-1.895-1.78-2.215-.186-.32-.02-.493.14-.652.144-.144.32-.373.48-.56.16-.187.213-.32.32-.533.107-.213.053-.4-.027-.56-.08-.16-.72-1.734-.986-2.374-.26-.624-.524-.539-.72-.549l-.613-.011c-.213 0-.56.08-.853.4-.293.32-1.12 1.094-1.12 2.667 0 1.574 1.146 3.094 1.306 3.307.16.213 2.256 3.445 5.466 4.83.764.33 1.36.527 1.824.674.767.244 1.464.21 2.015.127.615-.092 1.892-.773 2.158-1.52.267-.746.267-1.386.187-1.52-.08-.133-.293-.213-.613-.373z"/></svg>
+          Quero meu diagnóstico gratuito
+        </a>
+        <a href="#services" class="btn btn-ghost">Conhecer os serviços</a>
+      </div>
+      <p class="micro-trust" style="justify-content:center;margin-top:22px;color:rgba(255,255,255,.65)">Sem compromisso · Resposta rápida no WhatsApp · Atendimento humano, não robô</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <a href="#top" class="logo"><div class="logo-mark">FPN</div><div><b>FPN Contabilidade</b><small>Soluções Empresariais</small></div></a>
+        <p style="margin-top:16px;max-width:340px">Contabilidade estratégica em Cabedelo e região para empresas que querem crescer com segurança, organização e economia tributária.</p>
+      </div>
+      <div>
+        <h6>Serviços</h6>
+        <a href="#services">Contabilidade mensal</a>
+        <a href="#services">Planejamento tributário</a>
+        <a href="#services">Abertura de empresa</a>
+        <a href="#services">Troca de contador</a>
+        <a href="#services">Reforma Tributária 2026</a>
+      </div>
+      <div>
+        <h6>Contato</h6>
+        <a href="https://wa.me/558398719090?text=Ol%C3%A1!%20Quero%20falar%20com%20a%20FPN%20Contabilidade." target="_blank" rel="noopener">WhatsApp (83) 9871-9090</a>
+        <a href="#">Cabedelo e Região – PB</a>
+        <a href="#">contato@fpncontabilidade.com</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 FPN Contabilidade e Soluções Empresariais. Todos os direitos reservados.</span>
+      <span>CRC/PB · Atendimento em Cabedelo e toda a Grande João Pessoa</span>
+    </div>
+  </div>
+</footer>
+
+<a class="wa" href="https://wa.me/558398719090?text=Ol%C3%A1!%20Quero%20falar%20com%20a%20FPN%20Contabilidade." target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+  <span class="wa-text">Fale conosco</span>
+  <svg viewBox="0 0 32 32" fill="#fff" aria-hidden="true"><path d="M16.001 3.2c-7.06 0-12.8 5.74-12.8 12.8 0 2.257.59 4.463 1.71 6.408L3.2 28.8l6.57-1.723a12.74 12.74 0 006.23 1.588h.005c7.06 0 12.8-5.74 12.8-12.8 0-3.42-1.332-6.635-3.751-9.053A12.716 12.716 0 0016.001 3.2zm0 23.44h-.004a10.63 10.63 0 01-5.42-1.484l-.389-.231-4.018 1.053 1.072-3.918-.253-.402a10.6 10.6 0 01-1.626-5.658c0-5.866 4.774-10.64 10.643-10.64a10.57 10.57 0 017.52 3.122 10.57 10.57 0 013.116 7.526c0 5.866-4.773 10.641-10.641 10.641zm5.834-7.969c-.32-.16-1.892-.933-2.185-1.04-.293-.107-.507-.16-.72.16-.213.32-.826 1.04-1.013 1.253-.187.213-.373.24-.693.08-.32-.16-1.35-.498-2.572-1.587-.95-.848-1.593-1.895-1.78-2.215-.186-.32-.02-.493.14-.652.144-.144.32-.373.48-.56.16-.187.213-.32.32-.533.107-.213.053-.4-.027-.56-.08-.16-.72-1.734-.986-2.374-.26-.624-.524-.539-.72-.549l-.613-.011c-.213 0-.56.08-.853.4-.293.32-1.12 1.094-1.12 2.667 0 1.574 1.146 3.094 1.306 3.307.16.213 2.256 3.445 5.466 4.83.764.33 1.36.527 1.824.674.767.244 1.464.21 2.015.127.615-.092 1.892-.773 2.158-1.52.267-.746.267-1.386.187-1.52-.08-.133-.293-.213-.613-.373z"/></svg>
+</a>
+
+<script>
+// Reveal (mil-up): fade + slide on scroll com stagger por linha
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+document.querySelectorAll('.up').forEach(el=>io.observe(el));
+
+// Parallax dos blobs (mil-scale / mil-animation) + scale das imagens
+const blobs=[...document.querySelectorAll('.blob')];
+let ticking=false;
+function onScroll(){
+  if(ticking)return;ticking=true;
+  requestAnimationFrame(()=>{
+    const y=scrollY;
+    blobs.forEach(b=>{const s=parseFloat(b.dataset.speed||3);b.style.transform=`translateY(${y*s*.04}px)`});
+    ticking=false;
+  });
+}
+addEventListener('scroll',onScroll,{passive:true});
+</script>
+</body>
+</html>
