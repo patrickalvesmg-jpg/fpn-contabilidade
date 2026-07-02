@@ -574,6 +574,21 @@ function onScroll(){
   });
 }
 addEventListener('scroll',onScroll,{passive:true});
+
+// Evento GTM: dispara "whatsapp_click" ao clicar em qualquer botão/link de WhatsApp
+window.dataLayer = window.dataLayer || [];
+document.querySelectorAll('a[href*="wa.me"], a[href*="api.whatsapp.com"]').forEach(function(a){
+  a.addEventListener('click', function(){
+    window.dataLayer.push({
+      event: 'whatsapp_click',
+      button_location: a.classList.contains('wa') ? 'flutuante'
+        : (a.closest('.contact') ? 'cta_final'
+        : (a.closest('.banner') ? 'hero'
+        : (a.closest('footer') ? 'rodape' : 'outro'))),
+      page_city: document.title
+    });
+  });
+});
 </script>
 </body>
 </html>
