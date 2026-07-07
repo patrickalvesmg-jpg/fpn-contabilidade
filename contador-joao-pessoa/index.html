@@ -43,7 +43,7 @@ body{font-family:var(--body);color:var(--texto);background:var(--branco);line-he
 a{text-decoration:none;color:inherit}
 img{max-width:100%;display:block}
 .container{width:min(100% - 40px,var(--max));margin-inline:auto}
-.p120{padding:120px 0}
+.p120{padding:96px 0}
 .suptitle{display:inline-flex;align-items:center;gap:10px;font-size:.8rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--azul)}
 .suptitle::before{content:"";width:40px;height:2px;background:var(--verde)}
 .suptitle.right::before{order:0}
@@ -133,8 +133,8 @@ header{position:sticky;top:0;z-index:70;background:rgba(7,26,56,.85);backdrop-fi
 .section-head-row{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:50px}
 .section-head-row h2{font-size:clamp(1.9rem,4vw,2.9rem)}
 .section-head-row p{color:var(--texto-suave);font-size:1.1rem;max-width:360px}
-.esp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.esp-card{background:#fff;border:1px solid var(--cinza-borda);border-radius:20px;padding:34px 30px;transition:transform .32s cubic-bezier(.2,.8,.2,1),box-shadow .32s,border-color .32s;position:relative;overflow:hidden}
+.esp-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;max-width:940px;margin-inline:auto}
+.esp-card{background:#fff;border:1px solid var(--cinza-borda);border-radius:20px;padding:36px 34px;transition:transform .32s cubic-bezier(.2,.8,.2,1),box-shadow .32s,border-color .32s;position:relative;overflow:hidden}
 .esp-card::before{content:"";position:absolute;left:0;top:0;width:100%;height:4px;background:var(--verde);transform:scaleX(0);transform-origin:left;transition:transform .35s}
 .esp-card:hover{transform:translateY(-8px);box-shadow:var(--sombra);border-color:transparent}
 .esp-card:hover::before{transform:scaleX(1)}
@@ -148,13 +148,12 @@ header{position:sticky;top:0;z-index:70;background:rgba(7,26,56,.85);backdrop-fi
 .services{position:relative;background:linear-gradient(160deg,var(--azul-escuro),var(--azul-abissal));color:#fff;overflow:hidden}
 .services .head-center{text-align:center;max-width:760px;margin:0 auto 70px}
 .services .head-center h2{color:#fff;font-size:clamp(2.2rem,5vw,3.4rem);margin:16px 0 30px}
-.serv-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid rgba(255,255,255,.12);border-radius:24px;overflow:hidden}
-.serv-card{padding:40px 30px;border-right:1px solid rgba(255,255,255,.12);border-bottom:1px solid rgba(255,255,255,.12);transition:background .3s;cursor:pointer;position:relative}
-.serv-card:hover{background:rgba(167,207,70,.08)}
-.serv-card .num{font-family:var(--display);color:var(--verde);font-size:.9rem;font-weight:700;margin-bottom:20px;display:block}
-.serv-card h5{color:#fff;font-size:1.15rem;margin-bottom:14px;line-height:1.25}
-.serv-card p{color:rgba(255,255,255,.7);font-size:.95rem}
-@media(min-width:993px){.serv-grid .serv-card:nth-child(4n){border-right:0}}
+.serv-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:20px}
+.serv-card{flex:1 1 300px;max-width:360px;padding:34px 30px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:18px;transition:transform .3s,background .3s,border-color .3s;cursor:pointer;position:relative}
+.serv-card:hover{transform:translateY(-6px);background:rgba(167,207,70,.08);border-color:rgba(167,207,70,.35)}
+.serv-card .num{font-family:var(--display);color:var(--verde);font-size:1.1rem;font-weight:700;margin-bottom:16px;display:block}
+.serv-card h5{color:#fff;font-size:1.18rem;margin-bottom:12px;line-height:1.25}
+.serv-card p{color:rgba(255,255,255,.7);font-size:.95rem;line-height:1.6}
 
 /* ===== DEPOIMENTOS ===== */
 .depo{background:var(--cinza)}
@@ -210,10 +209,9 @@ footer a:hover{color:var(--verde)}
 
 /* ===== TABLET ===== */
 @media(max-width:992px){
-  .serv-grid{grid-template-columns:1fr 1fr}
-  .serv-card:nth-child(2n){border-right:0}
   .about-grid{gap:44px}
   .pain-grid{grid-template-columns:1fr 1fr}
+  .serv-card{flex:1 1 260px}
 }
 
 /* ===== MOBILE ===== */
@@ -228,6 +226,7 @@ footer a:hover{color:var(--verde)}
   .logo small{font-size:.66rem}
   .about-grid,.foot-grid{grid-template-columns:1fr}
   .esp-grid,.depo-track,.pain-grid{grid-template-columns:1fr}
+  .serv-card{flex:1 1 100%;max-width:none}
   .pain-turn{font-size:1.2rem}
   /* hero compacto: CTA do WhatsApp aparece já na primeira dobra */
   .banner{padding:88px 0 64px}
@@ -250,23 +249,21 @@ footer a:hover{color:var(--verde)}
 }
 
 @media(max-width:560px){
-  .serv-grid{grid-template-columns:1fr}
-  .serv-card{border-right:0;padding:32px 26px}
-  .p120{padding:54px 0}
-  .h1{font-size:2rem;line-height:1.14}
-  .banner h1{font-size:2rem}
-  h2{font-size:1.7rem !important}
-  .about-text h2,.services .head-center h2,.depo .head-center h2,.contact h2,.section-head-row h2{font-size:1.7rem}
+  .serv-card{padding:30px 26px}
+  .p120{padding:60px 0}
+  .h1,.banner h1{font-size:2.05rem;line-height:1.16}
+  .about-text h2,.services .head-center h2,.depo .head-center h2,.contact h2,.section-head-row h2{font-size:1.75rem}
   .btn{padding:15px 24px;font-size:.94rem}
   .esp-card,.depo-card{padding:28px 24px}
-  .about-text p{font-size:1rem}
+  .about-text p,.contact p,.banner-lead{font-size:1rem}
   .banner .cover-line{font-size:.92rem}
   .founder-badge{left:12px;bottom:16px;padding:12px 15px;gap:10px}
   .founder-badge .avatar{width:44px;height:44px}
-  /* botão flutuante WhatsApp — só o ícone no mobile (compacto, não ocupa a tela) */
+  .pain{padding:20px 22px}
+  .depo-card p{font-size:.98rem}
+  /* botão flutuante WhatsApp — só o ícone no mobile (compacto) */
   .wa{right:16px;bottom:calc(16px + env(safe-area-inset-bottom));width:56px;height:56px}
   .wa svg{width:32px;height:32px}
-  .wa .wa-text{display:none}
 }
 </style>
 </head>
@@ -284,9 +281,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div><b>FPN Contabilidade</b><small>João Pessoa e Região</small></div>
     </a>
     <nav class="nav-links">
-      <a href="#about">Quem somos</a>
-      <a href="#especialidades">Para quem</a>
-      <a href="#services">Serviços</a>
+      <a href="#about">Como pensamos</a>
+      <a href="#especialidades">Pilares</a>
+      <a href="#services">Diferenciais</a>
       <a href="#depoimentos">Depoimentos</a>
       <a href="#faq">Dúvidas</a>
     </nav>
@@ -375,12 +372,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- ===== ESPECIALIDADES / PARA QUEM É ===== -->
 <section id="especialidades" class="p120" style="padding-top:0">
   <div class="container">
-    <div class="section-head-row">
-      <div>
-        <span class="suptitle up">Nossos pilares</span>
-        <h2 class="up" style="margin-top:16px">O que a FPN faz pela sua empresa em João Pessoa e região</h2>
-      </div>
-      <p class="up">Quatro pilares que transformam contabilidade em lucro:</p>
+    <div class="head-center" style="max-width:680px;margin:0 auto 50px">
+      <span class="suptitle up" style="justify-content:center">Nossos pilares</span>
+      <h2 class="up" style="margin-top:16px">O que a FPN faz pela sua empresa em João Pessoa e região</h2>
+      <p class="up" style="color:var(--texto-suave);font-size:1.1rem;margin-top:14px">Quatro pilares que transformam contabilidade em lucro.</p>
     </div>
     <div class="esp-grid">
       <div class="esp-card up">
