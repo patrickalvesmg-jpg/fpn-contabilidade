@@ -110,6 +110,9 @@ input:focus,select:focus{outline:none;border-color:var(--verde)}
 .reg.best .rv b{color:var(--verde-esc)}
 .reg .rv small{display:block;color:var(--texto-suave);font-size:.75rem}
 .reg .tag-best{background:var(--verde);color:var(--azul-escuro);font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;padding:3px 9px;border-radius:99px;margin-left:8px}
+.reg .tag-atual{background:var(--azul);color:#fff;font-size:.66rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;padding:3px 9px;border-radius:99px;margin-left:6px}
+.reg.atual{border-color:var(--azul)}
+.reg.atual.best{border-color:var(--verde)}
 .reg .breakdown{margin-top:14px;padding-top:14px;border-top:1px dashed var(--cinza-borda);display:none;gap:6px;grid-template-columns:1fr 1fr}
 .reg .breakdown.show{display:grid}
 .reg .bd{display:flex;justify-content:space-between;font-size:.82rem;color:var(--texto-suave)}
@@ -168,6 +171,18 @@ input:focus,select:focus{outline:none;border-color:var(--verde)}
         </div>
       </div>
 
+      <!-- Q1b: regime atual (só se já tem empresa) -->
+      <div class="q" id="q1b">
+        <span class="qlabel">Em qual regime tributário você está hoje?</span>
+        <div class="opts-tap" id="regimeAtual">
+          <button class="tap" data-v="MEI">MEI<small>Microempreendedor Individual</small></button>
+          <button class="tap" data-v="Simples Nacional">Simples Nacional</button>
+          <button class="tap" data-v="Lucro Presumido">Lucro Presumido</button>
+          <button class="tap" data-v="">Não sei informar<small>A gente descobre pra você</small></button>
+        </div>
+        <button class="back" onclick="showQ(1)">← Voltar</button>
+      </div>
+
       <!-- Q2: setor -->
       <div class="q" id="q2">
         <span class="qlabel">Qual é a área da sua empresa?</span>
@@ -176,7 +191,7 @@ input:focus,select:focus{outline:none;border-color:var(--verde)}
           <button class="tap" data-v="comercio">🛒 Comércio / Loja<small>Venda de produtos, varejo, e-commerce</small></button>
           <button class="tap" data-v="industria">🏭 Indústria / Produção<small>Fabricação e transformação</small></button>
         </div>
-        <button class="back" onclick="showQ(1)">← Voltar</button>
+        <button class="back" onclick="goBackFromSetor()">← Voltar</button>
       </div>
 
       <!-- Q3: cidade -->
@@ -226,7 +241,7 @@ input:focus,select:focus{outline:none;border-color:var(--verde)}
   <!-- RESULTADO -->
   <div class="card" id="result" style="margin-top:20px">
     <div class="res-hero">
-      <span class="badge">Resultado da simulação</span>
+      <span class="badge" id="r-badge">Resultado da simulação</span>
       <h2 id="r-title">Você pode economizar até</h2>
       <div class="eco" id="r-eco">R$ 0</div>
       <p id="r-sub">por ano, escolhendo o regime certo.</p>
@@ -245,7 +260,7 @@ input:focus,select:focus{outline:none;border-color:var(--verde)}
 
 <script>
 // ================= ESTADO =================
-var dados = { temEmpresa:null, setor:null, faturamento:0, folha:0, cidade:"", cidadeNome:"", iss:0.05, nome:"", email:"", whatsapp:"" };
+var dados = { temEmpresa:null, regimeAtual:"", setor:null, faturamento:0, folha:0, cidade:"", cidadeNome:"", iss:0.05, nome:"", email:"", whatsapp:"" };
 var WA = "https://wa.me/558398719090?text=";
 
 // Cidades atendidas (Grande João Pessoa) — todas ISS 5%
@@ -273,14 +288,25 @@ function showQ(n){
   document.getElementById('q'+n).classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
 }
-// Q1 tem empresa → avança
+// Q1 tem empresa → se SIM pergunta regime atual (Q1b); se NÃO pula pro setor (Q2)
 document.querySelectorAll('#temEmpresa .tap').forEach(function(o){
   o.addEventListener('click',function(){
     document.querySelectorAll('#temEmpresa .tap').forEach(x=>x.classList.remove('sel'));
     o.classList.add('sel'); dados.temEmpresa=o.dataset.v;
+    if(o.dataset.v==='sim'){ setTimeout(function(){ showQ('1b'); },180); }
+    else { dados.regimeAtual=""; setTimeout(function(){ showQ(2); },180); }
+  });
+});
+// Q1b regime atual → avança pro setor
+document.querySelectorAll('#regimeAtual .tap').forEach(function(o){
+  o.addEventListener('click',function(){
+    document.querySelectorAll('#regimeAtual .tap').forEach(x=>x.classList.remove('sel'));
+    o.classList.add('sel'); dados.regimeAtual=o.dataset.v;
     setTimeout(function(){ showQ(2); },180);
   });
 });
+// voltar do setor: se tem empresa volta pra regime (Q1b), senão pra Q1
+function goBackFromSetor(){ showQ(dados.temEmpresa==='sim' ? '1b' : 1); }
 // Q2 setor → avança
 document.querySelectorAll('#setorTap .tap').forEach(function(o){
   o.addEventListener('click',function(){
@@ -389,20 +415,45 @@ function finish(){
 
   lista.sort((a,b)=>a.valor-b.valor);
   var melhor=lista[0], pior=lista[lista.length-1];
-  var ecoAno=Math.max(0,(pior.valor-melhor.valor))*12;
 
-  document.getElementById('r-eco').textContent = ecoAno>0?fmt(ecoAno):fmt(melhor.valor*12);
-  document.getElementById('r-title').textContent = ecoAno>0?"Você pode economizar até":"Seu imposto estimado";
-  document.getElementById('r-sub').textContent = ecoAno>0
-    ? "por ano — a diferença entre o regime mais caro e o mais econômico para o seu caso."
-    : "seria o seu imposto anual no regime mais econômico.";
+  // marca o regime atual da pessoa (se informou)
+  var atual = dados.regimeAtual ? lista.find(x=>x.nome===dados.regimeAtual) : null;
+  lista.forEach(x=>{ x.atual = (atual && x.nome===atual.nome); });
+
+  // MEI estourado? (informou MEI mas faturamento passou do limite)
+  var meiEstourado = (dados.regimeAtual==='MEI' && fatAno>81000);
+
+  var ecoAno, titulo, sub;
+  if(meiEstourado){
+    titulo="Atenção: você ultrapassou o limite do MEI";
+    ecoAno = melhor.valor*12;
+    sub="Com esse faturamento você precisa migrar do MEI. O regime mais econômico agora seria o "+melhor.nome+".";
+  } else if(atual){
+    // economia REAL = regime atual − melhor
+    var eco = Math.max(0,(atual.valor - melhor.valor))*12;
+    if(eco>0){ titulo="Você pode economizar até"; ecoAno=eco;
+      sub="por ano migrando do "+atual.nome+" para o "+melhor.nome+", o regime ideal para o seu caso.";
+    } else { titulo="Você já está no regime mais econômico"; ecoAno=atual.valor*12;
+      sub="Seu regime atual ("+atual.nome+") já é o mais vantajoso. Mesmo assim, vale uma revisão para garantir que está tudo otimizado.";
+    }
+  } else {
+    ecoAno=Math.max(0,(pior.valor-melhor.valor))*12;
+    titulo = ecoAno>0?"Você pode economizar até":"Seu imposto estimado";
+    sub = ecoAno>0 ? "por ano, escolhendo o regime mais econômico para o seu caso." : "seria o seu imposto anual no regime mais econômico.";
+  }
+
+  document.getElementById('r-eco').textContent = fmt(ecoAno);
+  document.getElementById('r-title').textContent = titulo;
+  document.getElementById('r-sub').textContent = sub;
+  document.getElementById('r-badge').textContent = meiEstourado ? "⚠️ Alerta de desenquadramento" : "Resultado da simulação";
 
   var reg=document.getElementById('r-regimes'); reg.innerHTML='';
   lista.forEach(function(item,i){
     var best=(i===0);
     var bdHtml=(item.bd||[]).map(function(x){ return '<div class="bd"><span>'+x[0]+'</span><b>'+(typeof x[1]==='number'?fmt(x[1]):x[1])+'</b></div>'; }).join('');
-    var d=document.createElement('div'); d.className='reg'+(best?' best':'');
-    d.innerHTML='<div class="reg-top"><div class="rn">'+item.nome+(best?'<span class="tag-best">Mais econômico</span>':'')+'<small>'+item.sub+'</small></div>'+
+    var d=document.createElement('div'); d.className='reg'+(best?' best':'')+(item.atual?' atual':'');
+    var selos = (best?'<span class="tag-best">Mais econômico</span>':'') + (item.atual?'<span class="tag-atual">Seu regime hoje</span>':'');
+    d.innerHTML='<div class="reg-top"><div class="rn">'+item.nome+selos+'<small>'+item.sub+'</small></div>'+
       '<div class="rv"><b>'+fmt(item.valor)+'</b><small>por mês</small></div></div>'+
       (bdHtml?'<button class="toggle" onclick="this.nextElementSibling.classList.toggle(\'show\');this.textContent=this.nextElementSibling.classList.contains(\'show\')?\'Ocultar detalhes\':\'Ver detalhes do cálculo\'">Ver detalhes do cálculo</button><div class="breakdown">'+bdHtml+'</div>':'');
     reg.appendChild(d);
