@@ -74,17 +74,16 @@ input:focus,select:focus{outline:none;border-color:var(--verde)}
 .hint{font-size:.8rem;color:var(--texto-suave);margin-top:6px}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 
-/* radio "Sim/Não" */
-.radio-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px}
-.radio-opt{border:1.5px solid var(--cinza-borda);border-radius:12px;padding:14px 16px;cursor:pointer;transition:.2s;font-weight:600;text-align:center;display:flex;align-items:center;justify-content:center;gap:9px}
-.radio-opt:hover{border-color:var(--verde)}
-.radio-opt.sel{border-color:var(--verde);background:rgba(167,207,70,.08)}
-.radio-opt .dot{width:18px;height:18px;border-radius:50%;border:2px solid var(--cinza-borda)}
-.radio-opt.sel .dot{border-color:var(--verde);background:var(--verde)}
+/* sub-perguntas (uma por vez) */
+.q{display:none}
+.q.active{display:block;animation:fade .3s ease}
 
-/* checkbox */
-.check{display:flex;align-items:flex-start;gap:11px;margin-top:20px;cursor:pointer;font-size:.94rem;color:var(--texto)}
-.check input{width:auto;margin-top:3px;accent-color:var(--verde);cursor:pointer}
+/* opções que avançam ao clicar (tap) */
+.opts-tap{display:grid;gap:10px;margin-top:4px}
+.tap{width:100%;text-align:left;border:1.5px solid var(--cinza-borda);border-radius:12px;padding:16px 18px;cursor:pointer;transition:border-color .2s,background .2s,transform .15s;font-family:var(--body);font-weight:600;font-size:1rem;color:var(--azul-escuro);background:#fff;display:block}
+.tap:hover{border-color:var(--verde);background:rgba(167,207,70,.05);transform:translateX(3px)}
+.tap.sel{border-color:var(--verde);background:rgba(167,207,70,.1)}
+.tap small{display:block;font-weight:500;color:var(--texto-suave);font-size:.82rem;margin-top:3px}
 
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:16px 24px;border-radius:12px;font-family:var(--body);font-weight:700;font-size:1rem;cursor:pointer;border:0;background:var(--verde);color:var(--azul-escuro);box-shadow:0 12px 28px rgba(167,207,70,.3);transition:transform .2s,box-shadow .2s;margin-top:26px}
 .btn:hover{transform:translateY(-2px);box-shadow:0 16px 36px rgba(167,207,70,.4)}
@@ -157,67 +156,55 @@ input:focus,select:focus{outline:none;border-color:var(--verde)}
       <div class="phase" id="ph2"><span class="n">2</span> Sobre você</div>
     </div>
 
-    <!-- FASE 1: SOBRE SUA EMPRESA -->
+    <!-- FASE 1: SOBRE SUA EMPRESA (uma pergunta por vez, avanço automático) -->
     <div class="fase active" id="fase1">
-      <span class="qlabel">Você tem empresa aberta?</span>
-      <div class="radio-row" id="temEmpresa">
-        <div class="radio-opt" data-v="sim"><span class="dot"></span>Sim</div>
-        <div class="radio-opt" data-v="nao"><span class="dot"></span>Não</div>
-      </div>
 
-      <label for="profissao">Qual sua profissão / área de atuação?</label>
-      <select id="profissao" onchange="onProfissao()">
-        <option value="">Selecione sua área</option>
-        <optgroup label="Serviços / Profissional liberal">
-          <option value="servico|saude">Área da saúde (médico, dentista, fisio, psicólogo...)</option>
-          <option value="servico|ti">Tecnologia / TI / Desenvolvimento</option>
-          <option value="servico|consultoria">Consultoria / Assessoria</option>
-          <option value="servico|engenharia">Engenharia / Arquitetura</option>
-          <option value="servico|juridico">Advocacia / Serviços jurídicos</option>
-          <option value="servico|marketing">Marketing e publicidade / Agência</option>
-          <option value="servico|educacao">Educação / Cursos / Professor</option>
-          <option value="servico|beleza">Beleza / Estética</option>
-          <option value="servico|contabil">Serviços contábeis / Financeiros</option>
-          <option value="servico|outro">Outros serviços</option>
-        </optgroup>
-        <optgroup label="Comércio">
-          <option value="comercio|loja">Loja física / Varejo</option>
-          <option value="comercio|ecommerce">E-commerce / Loja online</option>
-          <option value="comercio|atacado">Distribuidora / Atacado</option>
-          <option value="comercio|outro">Outros comércios</option>
-        </optgroup>
-        <optgroup label="Indústria">
-          <option value="industria|alimenticia">Indústria alimentícia</option>
-          <option value="industria|confeccao">Confecção / Têxtil</option>
-          <option value="industria|outro">Outras indústrias</option>
-        </optgroup>
-      </select>
-
-      <label for="faturamento">Qual é o faturamento mensal estimado?</label>
-      <input type="text" id="faturamento" inputmode="numeric" placeholder="R$ 20.000" oninput="maskMoney(this)">
-      <div class="hint">Some tudo o que a empresa recebe por mês, em média.</div>
-
-      <div id="folhaWrap" style="display:none">
-        <label for="folha">Gasto mensal com folha + pró-labore</label>
-        <input type="text" id="folha" inputmode="numeric" placeholder="R$ 6.000" oninput="maskMoney(this)">
-        <div class="hint">Salários, pró-labore e encargos. Usado no <b>Fator R</b> — pode reduzir muito seu imposto no Simples.</div>
-      </div>
-
-      <div class="two">
-        <div>
-          <label for="estado">Qual o estado da sua empresa?</label>
-          <select id="estado" onchange="onEstado()"><option value="">Selecione o estado</option></select>
-        </div>
-        <div>
-          <label for="cidade">Selecione a cidade</label>
-          <select id="cidade" onchange="onCidade()"><option value="">Selecione o estado primeiro</option></select>
+      <!-- Q1: tem empresa -->
+      <div class="q active" id="q1">
+        <span class="qlabel">Você já tem empresa aberta?</span>
+        <div class="opts-tap" id="temEmpresa">
+          <button class="tap" data-v="sim">Sim, já tenho CNPJ</button>
+          <button class="tap" data-v="nao">Ainda não, vou abrir</button>
         </div>
       </div>
-      <div class="hint" id="issHint">O ISS do seu município é aplicado automaticamente no cálculo.</div>
 
-      <label class="check"><input type="checkbox" id="exterior"> Meus clientes estão no exterior <small style="color:var(--texto-suave)">(pode dar direito a benefícios fiscais)</small></label>
+      <!-- Q2: setor -->
+      <div class="q" id="q2">
+        <span class="qlabel">Qual é a área da sua empresa?</span>
+        <div class="opts-tap" id="setorTap">
+          <button class="tap" data-v="servico">🩺 Serviços / Profissional liberal<small>Saúde, TI, consultoria, advocacia, agências...</small></button>
+          <button class="tap" data-v="comercio">🛒 Comércio / Loja<small>Venda de produtos, varejo, e-commerce</small></button>
+          <button class="tap" data-v="industria">🏭 Indústria / Produção<small>Fabricação e transformação</small></button>
+        </div>
+        <button class="back" onclick="showQ(1)">← Voltar</button>
+      </div>
 
-      <button class="btn" id="bNext" disabled onclick="goFase2()">Continuar</button>
+      <!-- Q3: cidade -->
+      <div class="q" id="q3">
+        <span class="qlabel">Em qual cidade fica a sua empresa?</span>
+        <div class="opts-tap" id="cidadeTap">
+          <button class="tap" data-v="joao-pessoa">João Pessoa</button>
+          <button class="tap" data-v="cabedelo">Cabedelo</button>
+          <button class="tap" data-v="bayeux">Bayeux</button>
+          <button class="tap" data-v="santa-rita">Santa Rita</button>
+        </div>
+        <button class="back" onclick="showQ(2)">← Voltar</button>
+      </div>
+
+      <!-- Q4: faturamento (+ folha) -->
+      <div class="q" id="q4">
+        <span class="qlabel">Qual é o faturamento mensal estimado?</span>
+        <input type="text" id="faturamento" inputmode="numeric" placeholder="R$ 20.000" oninput="maskMoney(this)">
+        <div class="hint">Some tudo o que a empresa recebe por mês, em média.</div>
+        <div id="folhaWrap" style="display:none">
+          <label for="folha">Gasto mensal com folha + pró-labore</label>
+          <input type="text" id="folha" inputmode="numeric" placeholder="R$ 6.000" oninput="maskMoney(this)">
+          <div class="hint">Salários, pró-labore e encargos. Usado no <b>Fator R</b> — pode reduzir muito seu imposto no Simples.</div>
+        </div>
+        <button class="btn" id="bNext" disabled onclick="goFase2()">Continuar</button>
+        <button class="back" onclick="showQ(3)">← Voltar</button>
+      </div>
+
     </div>
 
     <!-- FASE 2: SOBRE VOCÊ -->
@@ -258,22 +245,16 @@ input:focus,select:focus{outline:none;border-color:var(--verde)}
 
 <script>
 // ================= ESTADO =================
-var dados = { temEmpresa:null, setor:null, atividade:"", profissaoTxt:"", faturamento:0, folha:0, estado:"", cidade:"", cidadeNome:"", iss:0.05, exterior:false, nome:"", email:"", whatsapp:"" };
+var dados = { temEmpresa:null, setor:null, faturamento:0, folha:0, cidade:"", cidadeNome:"", iss:0.05, nome:"", email:"", whatsapp:"" };
 var WA = "https://wa.me/558398719090?text=";
 
-// UFs
-var UFS = ["AC","AL","AM","AP","BA","CE","DF","ES","GO","MA","MG","MS","MT","PA","PB","PE","PI","PR","RJ","RN","RO","RR","RS","SC","SE","SP","TO"];
-// Cidades da PB (Grande João Pessoa) com ISS; outras cidades → padrão 5%
-var CIDADES_PB = [
-  {v:"joao-pessoa",nome:"João Pessoa",iss:0.05},
-  {v:"cabedelo",nome:"Cabedelo",iss:0.05},
-  {v:"bayeux",nome:"Bayeux",iss:0.05},
-  {v:"santa-rita",nome:"Santa Rita",iss:0.05},
-  {v:"outra-pb",nome:"Outra cidade da PB",iss:0.05}
-];
-
-// popular estados
-(function(){ var e=document.getElementById('estado'); UFS.forEach(function(u){ var o=document.createElement('option');o.value=u;o.textContent=u;e.appendChild(o); }); })();
+// Cidades atendidas (Grande João Pessoa) — todas ISS 5%
+var CIDADES = {
+  "joao-pessoa":{nome:"João Pessoa",iss:0.05},
+  "cabedelo":{nome:"Cabedelo",iss:0.05},
+  "bayeux":{nome:"Bayeux",iss:0.05},
+  "santa-rita":{nome:"Santa Rita",iss:0.05}
+};
 
 // ================= MÁSCARAS =================
 function onlyNum(s){ return (s||"").replace(/\D/g,""); }
@@ -286,46 +267,42 @@ function maskPhone(el){
   el.value=out; validate2();
 }
 
-// ================= FASE 1 =================
-document.querySelectorAll('#temEmpresa .radio-opt').forEach(function(o){
+// ================= FASE 1 (sub-perguntas com auto-avanço) =================
+function showQ(n){
+  document.querySelectorAll('#fase1 .q').forEach(q=>q.classList.remove('active'));
+  document.getElementById('q'+n).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+// Q1 tem empresa → avança
+document.querySelectorAll('#temEmpresa .tap').forEach(function(o){
   o.addEventListener('click',function(){
-    document.querySelectorAll('#temEmpresa .radio-opt').forEach(x=>x.classList.remove('sel'));
-    o.classList.add('sel'); dados.temEmpresa=o.dataset.v; validate1();
+    document.querySelectorAll('#temEmpresa .tap').forEach(x=>x.classList.remove('sel'));
+    o.classList.add('sel'); dados.temEmpresa=o.dataset.v;
+    setTimeout(function(){ showQ(2); },180);
   });
 });
-function onProfissao(){
-  var v=document.getElementById('profissao').value, sel=document.getElementById('profissao');
-  if(!v){ dados.setor=null; return; }
-  var parts=v.split('|'); dados.setor=parts[0]; dados.atividade=parts[1];
-  dados.profissaoTxt=sel.options[sel.selectedIndex].text;
-  document.getElementById('folhaWrap').style.display = (dados.setor==='servico') ? 'block' : 'none';
-  validate1();
-}
-function onEstado(){
-  dados.estado=document.getElementById('estado').value;
-  var c=document.getElementById('cidade'); c.innerHTML='';
-  if(dados.estado==='PB'){
-    c.innerHTML='<option value="">Selecione a cidade</option>';
-    CIDADES_PB.forEach(function(x){ var o=document.createElement('option');o.value=x.v;o.textContent=x.nome;c.appendChild(o); });
-  } else {
-    c.innerHTML='<option value="outra">Minha cidade (ISS padrão 5%)</option>';
-    dados.cidade='outra'; dados.cidadeNome=dados.estado; dados.iss=0.05;
-  }
-  validate1();
-}
-function onCidade(){
-  var v=document.getElementById('cidade').value; dados.cidade=v;
-  var found=CIDADES_PB.find(x=>x.v===v);
-  if(found){ dados.iss=found.iss; dados.cidadeNome=found.nome;
-    document.getElementById('issHint').innerHTML='ISS de <b>'+found.nome+'</b> aplicado automaticamente: <b>'+(dados.iss*100)+'%</b>.';
-  }
-  validate1();
-}
-document.getElementById('exterior').addEventListener('change',function(){ dados.exterior=this.checked; });
-
+// Q2 setor → avança
+document.querySelectorAll('#setorTap .tap').forEach(function(o){
+  o.addEventListener('click',function(){
+    document.querySelectorAll('#setorTap .tap').forEach(x=>x.classList.remove('sel'));
+    o.classList.add('sel'); dados.setor=o.dataset.v;
+    setTimeout(function(){ showQ(3); },180);
+  });
+});
+// Q3 cidade → avança (aplica ISS)
+document.querySelectorAll('#cidadeTap .tap').forEach(function(o){
+  o.addEventListener('click',function(){
+    document.querySelectorAll('#cidadeTap .tap').forEach(x=>x.classList.remove('sel'));
+    o.classList.add('sel'); dados.cidade=o.dataset.v;
+    var c=CIDADES[o.dataset.v]; if(c){ dados.iss=c.iss; dados.cidadeNome=c.nome; }
+    // folha só p/ serviço, na Q4
+    document.getElementById('folhaWrap').style.display = (dados.setor==='servico') ? 'block' : 'none';
+    setTimeout(function(){ showQ(4); },180);
+  });
+});
+// Q4 faturamento → habilita continuar
 function validate1(){
-  var ok = dados.temEmpresa && dados.setor && parseMoney(document.getElementById('faturamento'))>0 && document.getElementById('estado').value && document.getElementById('cidade').value;
-  document.getElementById('bNext').disabled = !ok;
+  document.getElementById('bNext').disabled = !(parseMoney(document.getElementById('faturamento'))>0);
 }
 
 // ================= FASE 2 =================
@@ -403,7 +380,7 @@ function finish(){
   dados.whatsapp=document.getElementById('whatsapp').value.trim();
 
   window.dataLayer=window.dataLayer||[];
-  window.dataLayer.push({event:'calculadora_lead',setor:dados.setor,atividade:dados.atividade,cidade:dados.cidade,faturamento:dados.faturamento,tem_empresa:dados.temEmpresa});
+  window.dataLayer.push({event:'calculadora_lead',setor:dados.setor,cidade:dados.cidade,faturamento:dados.faturamento,tem_empresa:dados.temEmpresa});
 
   var fatAno=dados.faturamento*12, lista=[];
   var mei=calcMEI(fatAno); if(mei) lista.push({nome:"MEI",sub:"Microempreendedor Individual",valor:mei.valor,bd:mei.bd});
@@ -433,7 +410,7 @@ function finish(){
 
   document.getElementById('r-cta-name').textContent = dados.nome ? (dados.nome.split(' ')[0]+', quer garantir essa economia?') : 'Quer garantir essa economia?';
   var msg="Ol%C3%A1!%20Fiz%20a%20simula%C3%A7%C3%A3o%20na%20calculadora%20da%20FPN.%20Sou%20"+encodeURIComponent(dados.nome)+
-    "%2C%20"+encodeURIComponent(dados.profissaoTxt)+"%20em%20"+encodeURIComponent(dados.cidadeNome||dados.estado)+
+    "%2C%20"+encodeURIComponent(dados.setor)+"%20em%20"+encodeURIComponent(dados.cidadeNome||"")+
     "%2C%20faturamento%20~"+encodeURIComponent("R$ "+dados.faturamento.toLocaleString('pt-BR'))+
     ".%20Quero%20a%20an%C3%A1lise%20tribut%C3%A1ria%20completa.";
   document.getElementById('r-wa').href=WA+msg;
