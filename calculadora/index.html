@@ -249,7 +249,7 @@ input:focus,select:focus{outline:none;border-color:var(--verde)}
     <div class="regimes" id="r-regimes"></div>
     <div class="res-cta">
       <h3 id="r-cta-name">Quer garantir essa economia?</h3>
-      <p>A FPN faz a análise completa do seu caso e cuida de toda a migração — sem burocracia, com atendimento próximo em João Pessoa e região.</p>
+      <p id="r-cta-text">A FPN faz a análise completa do seu caso e cuida de toda a migração — sem burocracia, com atendimento próximo em João Pessoa e região.</p>
       <a class="btn" id="r-wa" href="#" target="_blank" rel="noopener">Falar com a FPN no WhatsApp</a>
     </div>
     <div class="disclaimer">
@@ -459,12 +459,40 @@ function finish(){
     reg.appendChild(d);
   });
 
-  document.getElementById('r-cta-name').textContent = dados.nome ? (dados.nome.split(' ')[0]+', quer garantir essa economia?') : 'Quer garantir essa economia?';
-  var msg="Ol%C3%A1!%20Fiz%20a%20simula%C3%A7%C3%A3o%20na%20calculadora%20da%20FPN.%20Sou%20"+encodeURIComponent(dados.nome)+
-    "%2C%20"+encodeURIComponent(dados.setor)+"%20em%20"+encodeURIComponent(dados.cidadeNome||"")+
-    "%2C%20faturamento%20~"+encodeURIComponent("R$ "+dados.faturamento.toLocaleString('pt-BR'))+
-    ".%20Quero%20a%20an%C3%A1lise%20tribut%C3%A1ria%20completa.";
-  document.getElementById('r-wa').href=WA+msg;
+  // ===== COPY DO CTA E MENSAGEM DO WHATSAPP — CONTEXTUAL POR CENÁRIO =====
+  var pnome = dados.nome ? dados.nome.split(' ')[0] : "";
+  var ctaTitle, ctaText, waMsg;
+  var base = "Ol%C3%A1!%20Fiz%20a%20simula%C3%A7%C3%A3o%20na%20calculadora%20da%20FPN.%20";
+  var quemSou = "Sou%20"+encodeURIComponent(dados.nome)+"%2C%20"+encodeURIComponent(dados.setor)+"%20em%20"+encodeURIComponent(dados.cidadeNome||"")+"%2C%20faturamento%20~"+encodeURIComponent("R$ "+dados.faturamento.toLocaleString('pt-BR'))+".%20";
+
+  if(meiEstourado){
+    ctaTitle = (pnome?pnome+', ':'')+"você precisa sair do MEI — a FPN resolve isso pra você";
+    ctaText = "Com o seu faturamento, continuar no MEI gera multa e desenquadramento. A FPN faz a migração para o "+melhor.nome+" com segurança, sem você se preocupar com a burocracia.";
+    waMsg = base+quemSou+"Ultrapassei%20o%20limite%20do%20MEI%20e%20quero%20a%20ajuda%20da%20FPN%20para%20migrar%20para%20o%20"+encodeURIComponent(melhor.nome)+".";
+  } else if(atual && Math.max(0,(atual.valor-melhor.valor))>0){
+    // está no regime errado e pode economizar
+    ctaTitle = (pnome?pnome+', ':'')+"você está pagando imposto a mais todo mês";
+    ctaText = "Você está no "+atual.nome+", mas o regime ideal para o seu caso é o "+melhor.nome+". A FPN faz o planejamento tributário e cuida de toda a migração para você começar a economizar.";
+    waMsg = base+quemSou+"Estou%20no%20"+encodeURIComponent(atual.nome)+"%20e%20quero%20migrar%20para%20o%20"+encodeURIComponent(melhor.nome)+"%20para%20pagar%20menos%20imposto.";
+  } else if(atual){
+    // já está no melhor regime
+    ctaTitle = (pnome?pnome+', ':'')+"seu regime está certo — vamos garantir que está tudo otimizado?";
+    ctaText = "Você já está no "+atual.nome+", o regime mais econômico para o seu caso. Mesmo assim, a FPN faz uma revisão para garantir que você não está deixando nenhuma economia na mesa.";
+    waMsg = base+quemSou+"J%C3%A1%20estou%20no%20"+encodeURIComponent(atual.nome)+"%20e%20quero%20uma%20revis%C3%A3o%20tribut%C3%A1ria%20com%20a%20FPN.";
+  } else if(dados.temEmpresa==='nao'){
+    // vai abrir empresa
+    ctaTitle = (pnome?pnome+', ':'')+"comece sua empresa já no regime mais econômico";
+    ctaText = "Abrir a empresa no regime errado faz você pagar imposto a mais por anos. A FPN abre o seu CNPJ já no "+melhor.nome+", o mais vantajoso para o seu caso.";
+    waMsg = base+quemSou+"Vou%20abrir%20empresa%20e%20quero%20come%C3%A7ar%20no%20"+encodeURIComponent(melhor.nome)+"%20com%20a%20FPN.";
+  } else {
+    // padrão
+    ctaTitle = (pnome?pnome+', ':'')+"quer garantir essa economia?";
+    ctaText = "A FPN faz a análise completa do seu caso e cuida de toda a migração — sem burocracia, com atendimento próximo em João Pessoa e região.";
+    waMsg = base+quemSou+"Quero%20a%20an%C3%A1lise%20tribut%C3%A1ria%20completa%20com%20a%20FPN.";
+  }
+  document.getElementById('r-cta-name').textContent = ctaTitle;
+  document.getElementById('r-cta-text').textContent = ctaText;
+  document.getElementById('r-wa').href = WA+waMsg;
 
   document.getElementById('formcard').style.display='none';
   document.getElementById('intro').style.display='none';
