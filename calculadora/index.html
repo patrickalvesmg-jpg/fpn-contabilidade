@@ -20,8 +20,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <meta name="theme-color" content="#0B244D" />
-<title>Calculadora de Impostos 2026 | Descubra o regime mais econômico — FPN Contabilidade</title>
-<meta name="description" content="Simule em 1 minuto quanto sua empresa pagaria de imposto no MEI, Simples Nacional e Lucro Presumido em 2026. Descubra o regime mais econômico e quanto você pode economizar. Grátis, pela FPN Contabilidade." />
+<title>Calculadora de Impostos 2026 | MEI, Simples Nacional e Lucro Presumido — FPN Contabilidade</title>
+<meta name="description" content="Compare os impostos do MEI, Simples Nacional e Lucro Presumido em 2026 e descubra o regime mais econômico para a sua empresa. Simulação gratuita da FPN Contabilidade." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -32,59 +32,61 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   --branco:#FFFFFF; --cinza:#F6F8FB; --cinza-borda:#E5E7EB;
   --texto:#1D2939; --texto-suave:#667085;
   --sombra:0 24px 70px rgba(11,36,77,.16); --sombra-sm:0 8px 24px rgba(11,36,77,.10);
-  --display:'Fraunces',Georgia,serif; --body:'Plus Jakarta Sans',system-ui,sans-serif; --max:780px;
+  --display:'Fraunces',Georgia,serif; --body:'Plus Jakarta Sans',system-ui,sans-serif; --max:820px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:var(--body);color:var(--texto);background:radial-gradient(1000px 560px at 82% -10%,#e7f0ff,transparent 62%),var(--cinza);line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh}
 h1,h2,h3{font-family:var(--display);font-weight:600;color:var(--azul-escuro);line-height:1.12;letter-spacing:-.02em}
 .wrap{width:min(100% - 32px,var(--max));margin-inline:auto;padding:34px 0 60px}
 
-.top{display:flex;align-items:center;gap:12px;margin-bottom:24px}
+.top{display:flex;align-items:center;gap:12px;margin-bottom:22px}
 .logo-mark{width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,var(--azul),var(--verde));color:#fff;display:grid;place-items:center;font-family:var(--display);font-weight:700}
 .top b{color:var(--azul-escuro);font-size:1.02rem;font-family:var(--display)}
 .top small{display:block;color:var(--texto-suave);font-size:.72rem}
 
 .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.75rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--azul)}
 .eyebrow::before{content:"";width:24px;height:2px;background:var(--verde);border-radius:2px}
-.intro{margin-bottom:24px}
+.intro{margin-bottom:22px}
 .intro h1{font-size:clamp(1.7rem,4.6vw,2.5rem);margin:12px 0 12px}
 .intro h1 .g{color:var(--verde-esc)}
 .intro p{color:var(--texto-suave);font-size:1.05rem}
-.intro .badges{display:flex;gap:16px;margin-top:16px;flex-wrap:wrap}
-.intro .badges span{display:inline-flex;align-items:center;gap:7px;font-size:.85rem;color:var(--texto-suave);font-weight:600}
-.intro .badges svg{color:var(--verde-esc)}
 
-.card{background:#fff;border:1px solid var(--cinza-borda);border-radius:22px;padding:32px 30px;box-shadow:var(--sombra)}
+.card{background:#fff;border:1px solid var(--cinza-borda);border-radius:22px;padding:34px 32px;box-shadow:var(--sombra)}
 
-.steps-ind{display:flex;align-items:center;gap:6px;margin-bottom:8px}
-.steps-ind .s{flex:1;height:6px;border-radius:99px;background:var(--cinza-borda);transition:background .4s}
-.steps-ind .s.on{background:var(--verde)}
-.step-count{font-size:.78rem;color:var(--texto-suave);font-weight:600;margin-bottom:22px}
+/* indicador de fases (Sobre sua empresa / Sobre você) */
+.phases{display:flex;gap:0;margin-bottom:28px;border-bottom:1px solid var(--cinza-borda)}
+.phase{display:flex;align-items:center;gap:10px;padding:0 0 16px;margin-right:32px;color:var(--texto-suave);font-weight:600;font-size:.95rem;position:relative}
+.phase .n{width:26px;height:26px;border-radius:50%;background:var(--cinza-borda);color:#fff;display:grid;place-items:center;font-size:.85rem;font-weight:800;transition:.3s}
+.phase.on{color:var(--azul-escuro)}
+.phase.on .n{background:var(--verde);color:var(--azul-escuro)}
+.phase.on::after{content:"";position:absolute;left:0;bottom:-1px;width:100%;height:2px;background:var(--verde)}
+.phase.done .n{background:var(--azul);color:#fff}
 
-.step{display:none}
-.step.active{display:block;animation:fade .35s ease}
+.fase{display:none}
+.fase.active{display:block;animation:fade .35s ease}
 @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1}}
-.step h2{font-size:1.32rem;margin-bottom:6px}
-.step .sub{color:var(--texto-suave);font-size:.94rem;margin-bottom:20px}
 
-label{display:block;font-weight:600;font-size:.9rem;color:var(--azul-escuro);margin:16px 0 8px}
+label,.qlabel{display:block;font-weight:600;font-size:.92rem;color:var(--azul-escuro);margin:20px 0 8px}
+.qlabel:first-of-type{margin-top:0}
 input,select{width:100%;padding:14px 16px;border:1.5px solid var(--cinza-borda);border-radius:12px;font-family:var(--body);font-size:1rem;color:var(--texto);background:#fff;transition:border-color .2s;-webkit-appearance:none;appearance:none}
 select{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%23667085' stroke-width='2' viewBox='0 0 24 24'><path d='M6 9l6 6 6-6'/></svg>");background-repeat:no-repeat;background-position:right 16px center;padding-right:44px}
 input:focus,select:focus{outline:none;border-color:var(--verde)}
 .hint{font-size:.8rem;color:var(--texto-suave);margin-top:6px}
 .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 
-.opts{display:grid;gap:10px;margin-top:4px}
-.opt{display:flex;align-items:center;gap:12px;border:1.5px solid var(--cinza-borda);border-radius:12px;padding:15px 16px;cursor:pointer;transition:border-color .2s,background .2s;font-weight:600;font-size:.96rem}
-.opt:hover{border-color:var(--verde)}
-.opt.sel{border-color:var(--verde);background:rgba(167,207,70,.08)}
-.opt .dot{flex:0 0 20px;width:20px;height:20px;border-radius:50%;border:2px solid var(--cinza-borda);display:grid;place-items:center;transition:.2s}
-.opt.sel .dot{border-color:var(--verde)}
-.opt.sel .dot::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--verde)}
-.opt .ico{flex:0 0 22px;color:var(--azul)}
-.opt small{display:block;font-weight:500;color:var(--texto-suave);font-size:.8rem;margin-top:2px}
+/* radio "Sim/Não" */
+.radio-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px}
+.radio-opt{border:1.5px solid var(--cinza-borda);border-radius:12px;padding:14px 16px;cursor:pointer;transition:.2s;font-weight:600;text-align:center;display:flex;align-items:center;justify-content:center;gap:9px}
+.radio-opt:hover{border-color:var(--verde)}
+.radio-opt.sel{border-color:var(--verde);background:rgba(167,207,70,.08)}
+.radio-opt .dot{width:18px;height:18px;border-radius:50%;border:2px solid var(--cinza-borda)}
+.radio-opt.sel .dot{border-color:var(--verde);background:var(--verde)}
 
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:16px 24px;border-radius:12px;font-family:var(--body);font-weight:700;font-size:1rem;cursor:pointer;border:0;background:var(--verde);color:var(--azul-escuro);box-shadow:0 12px 28px rgba(167,207,70,.3);transition:transform .2s,box-shadow .2s;margin-top:24px}
+/* checkbox */
+.check{display:flex;align-items:flex-start;gap:11px;margin-top:20px;cursor:pointer;font-size:.94rem;color:var(--texto)}
+.check input{width:auto;margin-top:3px;accent-color:var(--verde);cursor:pointer}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:16px 24px;border-radius:12px;font-family:var(--body);font-weight:700;font-size:1rem;cursor:pointer;border:0;background:var(--verde);color:var(--azul-escuro);box-shadow:0 12px 28px rgba(167,207,70,.3);transition:transform .2s,box-shadow .2s;margin-top:26px}
 .btn:hover{transform:translateY(-2px);box-shadow:0 16px 36px rgba(167,207,70,.4)}
 .btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
 .back{background:none;border:0;color:var(--texto-suave);font-family:var(--body);font-size:.9rem;cursor:pointer;text-decoration:underline;margin-top:14px;display:block;text-align:center;width:100%}
@@ -115,7 +117,6 @@ input:focus,select:focus{outline:none;border-color:var(--verde)}
 .reg .bd b{color:var(--azul-escuro);font-weight:600}
 .reg .toggle{background:none;border:0;color:var(--azul);font-size:.8rem;font-weight:700;cursor:pointer;margin-top:10px;padding:0}
 .reg .toggle:hover{text-decoration:underline}
-
 .res-cta{background:linear-gradient(160deg,var(--azul),var(--azul-escuro));color:#fff;border-radius:18px;padding:26px;text-align:center;margin-top:8px;position:relative;overflow:hidden}
 .res-cta::before{content:"";position:absolute;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(167,207,70,.25),transparent 65%);top:-80px;right:-60px}
 .res-cta h3{color:#fff;font-size:1.25rem;margin-bottom:8px;position:relative}
@@ -128,6 +129,7 @@ input:focus,select:focus{outline:none;border-color:var(--verde)}
   .card{padding:26px 20px}
   .res-hero .eco{font-size:2.2rem}
   .two{grid-template-columns:1fr}
+  .phase{margin-right:18px;font-size:.85rem}
   .reg .breakdown.show{grid-template-columns:1fr}
 }
 </style>
@@ -144,90 +146,100 @@ input:focus,select:focus{outline:none;border-color:var(--verde)}
 
   <div class="intro" id="intro">
     <span class="eyebrow">Diagnóstico tributário grátis</span>
-    <h1>Descubra quanto sua empresa <span class="g">paga a mais</span> de imposto</h1>
-    <p>Responda algumas perguntas e veja, em 1 minuto, quanto você pagaria no MEI, no Simples Nacional e no Lucro Presumido em 2026 — e qual é o regime mais econômico para o seu caso.</p>
-    <div class="badges">
-      <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Cálculo com alíquotas 2026</span>
-      <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> Considera o Fator R</span>
-      <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg> 100% gratuito</span>
-    </div>
+    <h1>Compare seus impostos e pague <span class="g">o mínimo possível</span></h1>
+    <p>Simule quanto sua empresa pagaria no MEI, no Simples Nacional e no Lucro Presumido em 2026 — e descubra qual é o regime mais econômico para o seu caso.</p>
   </div>
 
   <div class="card" id="formcard">
-    <div class="steps-ind">
-      <div class="s on"></div><div class="s"></div><div class="s"></div><div class="s"></div>
+    <!-- FASES -->
+    <div class="phases">
+      <div class="phase on" id="ph1"><span class="n">1</span> Sobre sua empresa</div>
+      <div class="phase" id="ph2"><span class="n">2</span> Sobre você</div>
     </div>
-    <div class="step-count" id="stepCount">Etapa 1 de 4</div>
 
-    <!-- ETAPA 1: situação -->
-    <div class="step active" id="step1">
-      <h2>Você já tem empresa aberta?</h2>
-      <p class="sub">Vamos simular o melhor cenário tributário para o seu caso.</p>
-      <div class="opts" id="temEmpresa">
-        <div class="opt" data-v="sim"><span class="dot"></span><div>Sim, já tenho CNPJ<small>Quero saber se estou no regime certo</small></div></div>
-        <div class="opt" data-v="nao"><span class="dot"></span><div>Ainda não, vou abrir<small>Quero começar no regime mais econômico</small></div></div>
+    <!-- FASE 1: SOBRE SUA EMPRESA -->
+    <div class="fase active" id="fase1">
+      <span class="qlabel">Você tem empresa aberta?</span>
+      <div class="radio-row" id="temEmpresa">
+        <div class="radio-opt" data-v="sim"><span class="dot"></span>Sim</div>
+        <div class="radio-opt" data-v="nao"><span class="dot"></span>Não</div>
       </div>
-    </div>
 
-    <!-- ETAPA 2: setor/atividade -->
-    <div class="step" id="step2">
-      <h2>Qual é a área da sua empresa?</h2>
-      <p class="sub">Isso define os anexos e as alíquotas usadas no cálculo.</p>
-      <div class="opts" id="setor">
-        <div class="opt" data-v="servico" data-tipo="servico"><span class="ico">🩺</span><span class="dot"></span><div>Serviços / Profissional liberal<small>Saúde, consultoria, TI, engenharia, advocacia, agências...</small></div></div>
-        <div class="opt" data-v="comercio" data-tipo="comercio"><span class="ico">🛒</span><span class="dot"></span><div>Comércio / Loja<small>Venda de produtos, varejo, e-commerce</small></div></div>
-        <div class="opt" data-v="industria" data-tipo="comercio"><span class="ico">🏭</span><span class="dot"></span><div>Indústria / Produção<small>Fabricação e transformação de produtos</small></div></div>
-      </div>
-      <button class="back" onclick="next(1)">← Voltar</button>
-    </div>
+      <label for="profissao">Qual sua profissão / área de atuação?</label>
+      <select id="profissao" onchange="onProfissao()">
+        <option value="">Selecione sua área</option>
+        <optgroup label="Serviços / Profissional liberal">
+          <option value="servico|saude">Área da saúde (médico, dentista, fisio, psicólogo...)</option>
+          <option value="servico|ti">Tecnologia / TI / Desenvolvimento</option>
+          <option value="servico|consultoria">Consultoria / Assessoria</option>
+          <option value="servico|engenharia">Engenharia / Arquitetura</option>
+          <option value="servico|juridico">Advocacia / Serviços jurídicos</option>
+          <option value="servico|marketing">Marketing e publicidade / Agência</option>
+          <option value="servico|educacao">Educação / Cursos / Professor</option>
+          <option value="servico|beleza">Beleza / Estética</option>
+          <option value="servico|contabil">Serviços contábeis / Financeiros</option>
+          <option value="servico|outro">Outros serviços</option>
+        </optgroup>
+        <optgroup label="Comércio">
+          <option value="comercio|loja">Loja física / Varejo</option>
+          <option value="comercio|ecommerce">E-commerce / Loja online</option>
+          <option value="comercio|atacado">Distribuidora / Atacado</option>
+          <option value="comercio|outro">Outros comércios</option>
+        </optgroup>
+        <optgroup label="Indústria">
+          <option value="industria|alimenticia">Indústria alimentícia</option>
+          <option value="industria|confeccao">Confecção / Têxtil</option>
+          <option value="industria|outro">Outras indústrias</option>
+        </optgroup>
+      </select>
 
-    <!-- ETAPA 3: números -->
-    <div class="step" id="step3">
-      <h2>Sobre o faturamento</h2>
-      <p class="sub">Use uma média mensal. Fica entre você e o cálculo.</p>
-      <label>Faturamento médio mensal</label>
+      <label for="faturamento">Qual é o faturamento mensal estimado?</label>
       <input type="text" id="faturamento" inputmode="numeric" placeholder="R$ 20.000" oninput="maskMoney(this)">
       <div class="hint">Some tudo o que a empresa recebe por mês, em média.</div>
 
-      <div id="folhaWrap">
-        <label>Gasto mensal com folha + pró-labore</label>
+      <div id="folhaWrap" style="display:none">
+        <label for="folha">Gasto mensal com folha + pró-labore</label>
         <input type="text" id="folha" inputmode="numeric" placeholder="R$ 6.000" oninput="maskMoney(this)">
         <div class="hint">Salários, pró-labore e encargos. Usado no <b>Fator R</b> — pode reduzir muito seu imposto no Simples.</div>
       </div>
 
-      <label>Cidade da empresa</label>
-      <select id="cidade" onchange="onCidade()">
-        <option value="">Selecione sua cidade</option>
-        <option value="joao-pessoa">João Pessoa</option>
-        <option value="cabedelo">Cabedelo</option>
-        <option value="bayeux">Bayeux</option>
-        <option value="santa-rita">Santa Rita</option>
-        <option value="outra">Outra cidade da Paraíba</option>
-      </select>
+      <div class="two">
+        <div>
+          <label for="estado">Qual o estado da sua empresa?</label>
+          <select id="estado" onchange="onEstado()"><option value="">Selecione o estado</option></select>
+        </div>
+        <div>
+          <label for="cidade">Selecione a cidade</label>
+          <select id="cidade" onchange="onCidade()"><option value="">Selecione o estado primeiro</option></select>
+        </div>
+      </div>
       <div class="hint" id="issHint">O ISS do seu município é aplicado automaticamente no cálculo.</div>
 
-      <button class="btn" id="b3" disabled onclick="next(4)">Ver quanto posso economizar</button>
-      <button class="back" onclick="next(2)">← Voltar</button>
+      <label class="check"><input type="checkbox" id="exterior"> Meus clientes estão no exterior <small style="color:var(--texto-suave)">(pode dar direito a benefícios fiscais)</small></label>
+
+      <button class="btn" id="bNext" disabled onclick="goFase2()">Continuar</button>
     </div>
 
-    <!-- ETAPA 4: captura -->
-    <div class="step" id="step4">
-      <h2>Seu resultado está pronto ✅</h2>
-      <p class="sub">Informe seus dados para liberar a simulação completa e receber a análise da FPN.</p>
-      <label>Seu nome</label>
-      <input type="text" id="nome" placeholder="Como podemos te chamar?" oninput="validate()">
-      <label>WhatsApp</label>
+    <!-- FASE 2: SOBRE VOCÊ -->
+    <div class="fase" id="fase2">
+      <span class="qlabel">Seu resultado está pronto ✅</span>
+      <p class="hint" style="margin:-2px 0 8px">Informe seus dados para liberar a simulação completa e receber a análise da FPN.</p>
+      <label for="nome">Seu nome</label>
+      <input type="text" id="nome" placeholder="Como podemos te chamar?" oninput="validate2()">
+      <label for="email">E-mail</label>
+      <input type="email" id="email" placeholder="voce@email.com" oninput="validate2()">
+      <label for="whatsapp">WhatsApp</label>
       <input type="text" id="whatsapp" inputmode="numeric" placeholder="(83) 9 9999-9999" oninput="maskPhone(this)">
-      <button class="btn" id="b4" disabled onclick="finish()">Ver minha simulação completa</button>
+      <button class="btn" id="bFinish" disabled onclick="finish()">Ver minha simulação completa</button>
       <p class="privacy">🔒 Seus dados estão seguros. Usamos apenas para te enviar a análise. Sem spam.</p>
-      <button class="back" onclick="next(3)">← Voltar</button>
+      <button class="back" onclick="goFase1()">← Voltar</button>
     </div>
   </div>
 
   <!-- RESULTADO -->
   <div class="card" id="result" style="margin-top:20px">
     <div class="res-hero">
-      <span class="badge" id="r-badge">Resultado da simulação</span>
+      <span class="badge">Resultado da simulação</span>
       <h2 id="r-title">Você pode economizar até</h2>
       <div class="eco" id="r-eco">R$ 0</div>
       <p id="r-sub">por ano, escolhendo o regime certo.</p>
@@ -246,72 +258,99 @@ input:focus,select:focus{outline:none;border-color:var(--verde)}
 
 <script>
 // ================= ESTADO =================
-var dados = { temEmpresa:null, setor:null, tipo:null, cidade:"", cidadeNome:"", faturamento:0, folha:0, iss:0.05, nome:"", whatsapp:"" };
+var dados = { temEmpresa:null, setor:null, atividade:"", profissaoTxt:"", faturamento:0, folha:0, estado:"", cidade:"", cidadeNome:"", iss:0.05, exterior:false, nome:"", email:"", whatsapp:"" };
 var WA = "https://wa.me/558398719090?text=";
 
-// ISS por cidade da Grande João Pessoa (alíquota padrão de serviços)
-// Fonte: legislação municipal — JP art. 177 LC 53/08 = 5%. Demais cidades: alíquota geral usual.
-var ISS_CIDADE = {
-  "joao-pessoa":{ nome:"João Pessoa", iss:0.05 },
-  "cabedelo":{ nome:"Cabedelo", iss:0.05 },
-  "bayeux":{ nome:"Bayeux", iss:0.05 },
-  "santa-rita":{ nome:"Santa Rita", iss:0.05 },
-  "outra":{ nome:"Paraíba", iss:0.05 }
-};
+// UFs
+var UFS = ["AC","AL","AM","AP","BA","CE","DF","ES","GO","MA","MG","MS","MT","PA","PB","PE","PI","PR","RJ","RN","RO","RR","RS","SC","SE","SP","TO"];
+// Cidades da PB (Grande João Pessoa) com ISS; outras cidades → padrão 5%
+var CIDADES_PB = [
+  {v:"joao-pessoa",nome:"João Pessoa",iss:0.05},
+  {v:"cabedelo",nome:"Cabedelo",iss:0.05},
+  {v:"bayeux",nome:"Bayeux",iss:0.05},
+  {v:"santa-rita",nome:"Santa Rita",iss:0.05},
+  {v:"outra-pb",nome:"Outra cidade da PB",iss:0.05}
+];
+
+// popular estados
+(function(){ var e=document.getElementById('estado'); UFS.forEach(function(u){ var o=document.createElement('option');o.value=u;o.textContent=u;e.appendChild(o); }); })();
 
 // ================= MÁSCARAS =================
 function onlyNum(s){ return (s||"").replace(/\D/g,""); }
-function maskMoney(el){ var n=onlyNum(el.value); el.value = n ? "R$ "+Number(n).toLocaleString('pt-BR') : ""; validate(); }
+function maskMoney(el){ var n=onlyNum(el.value); el.value = n ? "R$ "+Number(n).toLocaleString('pt-BR') : ""; validate1(); }
 function parseMoney(el){ return Number(onlyNum(el.value)||0); }
 function maskPhone(el){
   var n=onlyNum(el.value).slice(0,11), out=n;
   if(n.length>2) out="("+n.slice(0,2)+") "+n.slice(2);
   if(n.length>7) out="("+n.slice(0,2)+") "+n.slice(2,3)+" "+n.slice(3,7)+"-"+n.slice(7);
-  el.value=out; validate();
+  el.value=out; validate2();
 }
 
-// ================= SELEÇÕES (clique avança automático) =================
-document.querySelectorAll('#temEmpresa .opt').forEach(function(o){
+// ================= FASE 1 =================
+document.querySelectorAll('#temEmpresa .radio-opt').forEach(function(o){
   o.addEventListener('click',function(){
-    document.querySelectorAll('#temEmpresa .opt').forEach(x=>x.classList.remove('sel'));
-    o.classList.add('sel'); dados.temEmpresa=o.dataset.v;
-    setTimeout(function(){ next(2); }, 200); // avança sozinho
+    document.querySelectorAll('#temEmpresa .radio-opt').forEach(x=>x.classList.remove('sel'));
+    o.classList.add('sel'); dados.temEmpresa=o.dataset.v; validate1();
   });
 });
-document.querySelectorAll('#setor .opt').forEach(function(o){
-  o.addEventListener('click',function(){
-    document.querySelectorAll('#setor .opt').forEach(x=>x.classList.remove('sel'));
-    o.classList.add('sel'); dados.setor=o.dataset.v; dados.tipo=o.dataset.tipo;
-    // folha só p/ serviço
-    document.getElementById('folhaWrap').style.display=(o.dataset.v==='servico')?'block':'none';
-    setTimeout(function(){ next(3); }, 200); // avança sozinho
-  });
-});
-// cidade → ISS automático
-function onCidade(){
-  var v=document.getElementById('cidade').value;
-  dados.cidade=v;
-  if(ISS_CIDADE[v]){ dados.iss=ISS_CIDADE[v].iss; dados.cidadeNome=ISS_CIDADE[v].nome;
-    document.getElementById('issHint').innerHTML='ISS de <b>'+ISS_CIDADE[v].nome+'</b> aplicado automaticamente: <b>'+(dados.iss*100)+'%</b>.';
+function onProfissao(){
+  var v=document.getElementById('profissao').value, sel=document.getElementById('profissao');
+  if(!v){ dados.setor=null; return; }
+  var parts=v.split('|'); dados.setor=parts[0]; dados.atividade=parts[1];
+  dados.profissaoTxt=sel.options[sel.selectedIndex].text;
+  document.getElementById('folhaWrap').style.display = (dados.setor==='servico') ? 'block' : 'none';
+  validate1();
+}
+function onEstado(){
+  dados.estado=document.getElementById('estado').value;
+  var c=document.getElementById('cidade'); c.innerHTML='';
+  if(dados.estado==='PB'){
+    c.innerHTML='<option value="">Selecione a cidade</option>';
+    CIDADES_PB.forEach(function(x){ var o=document.createElement('option');o.value=x.v;o.textContent=x.nome;c.appendChild(o); });
+  } else {
+    c.innerHTML='<option value="outra">Minha cidade (ISS padrão 5%)</option>';
+    dados.cidade='outra'; dados.cidadeNome=dados.estado; dados.iss=0.05;
   }
-  validate();
+  validate1();
+}
+function onCidade(){
+  var v=document.getElementById('cidade').value; dados.cidade=v;
+  var found=CIDADES_PB.find(x=>x.v===v);
+  if(found){ dados.iss=found.iss; dados.cidadeNome=found.nome;
+    document.getElementById('issHint').innerHTML='ISS de <b>'+found.nome+'</b> aplicado automaticamente: <b>'+(dados.iss*100)+'%</b>.';
+  }
+  validate1();
+}
+document.getElementById('exterior').addEventListener('change',function(){ dados.exterior=this.checked; });
+
+function validate1(){
+  var ok = dados.temEmpresa && dados.setor && parseMoney(document.getElementById('faturamento'))>0 && document.getElementById('estado').value && document.getElementById('cidade').value;
+  document.getElementById('bNext').disabled = !ok;
 }
 
-// ================= NAVEGAÇÃO =================
-function next(n){
-  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
-  document.getElementById('step'+n).classList.add('active');
-  document.querySelectorAll('.steps-ind .s').forEach(function(s,i){ s.classList.toggle('on',(i+1)<=n); });
-  document.getElementById('stepCount').textContent='Etapa '+n+' de 4';
-  validate(); window.scrollTo({top:0,behavior:'smooth'});
-}
-function validate(){
-  var fatOk = parseMoney(document.getElementById('faturamento'))>0;
-  var cidadeOk = !!document.getElementById('cidade').value;
-  document.getElementById('b3').disabled = !(fatOk && cidadeOk);
+// ================= FASE 2 =================
+function validate2(){
   var nome=(document.getElementById('nome').value||'').trim();
   var wpp=onlyNum(document.getElementById('whatsapp').value);
-  document.getElementById('b4').disabled = !(nome.length>=2 && wpp.length>=10);
+  var email=(document.getElementById('email').value||'').trim();
+  var emailOk = email.length===0 || /.+@.+\..+/.test(email);
+  document.getElementById('bFinish').disabled = !(nome.length>=2 && wpp.length>=10 && emailOk);
+}
+function goFase2(){
+  dados.faturamento=parseMoney(document.getElementById('faturamento'));
+  dados.folha=parseMoney(document.getElementById('folha'));
+  document.getElementById('fase1').classList.remove('active');
+  document.getElementById('fase2').classList.add('active');
+  document.getElementById('ph1').classList.remove('on'); document.getElementById('ph1').classList.add('done');
+  document.getElementById('ph2').classList.add('on');
+  validate2(); window.scrollTo({top:0,behavior:'smooth'});
+}
+function goFase1(){
+  document.getElementById('fase2').classList.remove('active');
+  document.getElementById('fase1').classList.add('active');
+  document.getElementById('ph2').classList.remove('on');
+  document.getElementById('ph1').classList.remove('done'); document.getElementById('ph1').classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
 // ================= TABELAS SIMPLES NACIONAL 2026 =================
@@ -324,9 +363,8 @@ function aliqEfetivaSN(rbt12,tab){ var f=tab.find(x=>rbt12<=x[0])||tab[tab.lengt
 
 // ================= CÁLCULOS =================
 function calcMEI(fatAno){
-  if(fatAno>81000) return null; // limite MEI 2026 = R$ 81.000/ano
-  // DAS-MEI 2026 (salário mínimo R$ 1.621 → INSS 5% = R$ 81,05) + ICMS R$1 (comércio) / ISS R$5 (serviço)
-  var valor, comp;
+  if(fatAno>81000) return null;
+  var valor,comp;
   if(dados.setor==='servico'){ valor=86.05; comp="INSS R$ 81,05 + ISS R$ 5,00"; }
   else { valor=82.05; comp="INSS R$ 81,05 + ICMS R$ 1,00"; }
   return { valor:valor, bd:[["DAS-MEI fixo mensal",comp]] };
@@ -334,8 +372,8 @@ function calcMEI(fatAno){
 function calcSimples(){
   var fatMes=dados.faturamento, rbt12=fatMes*12;
   if(rbt12>4800000) return null;
-  var tab, info;
-  if(dados.tipo==='comercio'){ tab=SN.comercio; info="Anexo I"; }
+  var tab,info;
+  if(dados.setor==='comercio'||dados.setor==='industria'){ tab=SN.comercio; info="Anexo I"; }
   else {
     var fatorR = rbt12>0 ? (dados.folha*12)/rbt12 : 0;
     if(fatorR>=0.28){ tab=SN.servicoIII; info="Anexo III · Fator R "+Math.round(fatorR*100)+"%"; }
@@ -360,13 +398,12 @@ function calcPresumido(){
 
 // ================= FINALIZAR =================
 function finish(){
-  dados.faturamento=parseMoney(document.getElementById('faturamento'));
-  dados.folha=parseMoney(document.getElementById('folha'));
   dados.nome=document.getElementById('nome').value.trim();
+  dados.email=document.getElementById('email').value.trim();
   dados.whatsapp=document.getElementById('whatsapp').value.trim();
 
   window.dataLayer=window.dataLayer||[];
-  window.dataLayer.push({event:'calculadora_lead',setor:dados.setor,cidade:dados.cidade,faturamento:dados.faturamento,tem_empresa:dados.temEmpresa});
+  window.dataLayer.push({event:'calculadora_lead',setor:dados.setor,atividade:dados.atividade,cidade:dados.cidade,faturamento:dados.faturamento,tem_empresa:dados.temEmpresa});
 
   var fatAno=dados.faturamento*12, lista=[];
   var mei=calcMEI(fatAno); if(mei) lista.push({nome:"MEI",sub:"Microempreendedor Individual",valor:mei.valor,bd:mei.bd});
@@ -396,7 +433,7 @@ function finish(){
 
   document.getElementById('r-cta-name').textContent = dados.nome ? (dados.nome.split(' ')[0]+', quer garantir essa economia?') : 'Quer garantir essa economia?';
   var msg="Ol%C3%A1!%20Fiz%20a%20simula%C3%A7%C3%A3o%20na%20calculadora%20da%20FPN.%20Sou%20"+encodeURIComponent(dados.nome)+
-    "%2C%20"+encodeURIComponent(dados.setor)+"%20em%20"+encodeURIComponent(dados.cidadeNome||"")+
+    "%2C%20"+encodeURIComponent(dados.profissaoTxt)+"%20em%20"+encodeURIComponent(dados.cidadeNome||dados.estado)+
     "%2C%20faturamento%20~"+encodeURIComponent("R$ "+dados.faturamento.toLocaleString('pt-BR'))+
     ".%20Quero%20a%20an%C3%A1lise%20tribut%C3%A1ria%20completa.";
   document.getElementById('r-wa').href=WA+msg;
