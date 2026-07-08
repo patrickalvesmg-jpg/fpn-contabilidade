@@ -323,7 +323,14 @@ var SN = {
 function aliqEfetivaSN(rbt12,tab){ var f=tab.find(x=>rbt12<=x[0])||tab[tab.length-1]; return Math.max(((rbt12*f[1])-f[2])/rbt12,0); }
 
 // ================= CÁLCULOS =================
-function calcMEI(fatAno){ return fatAno>81000 ? null : { valor:80, bd:[["DAS-MEI fixo",80]] }; }
+function calcMEI(fatAno){
+  if(fatAno>81000) return null; // limite MEI 2026 = R$ 81.000/ano
+  // DAS-MEI 2026 (salário mínimo R$ 1.621 → INSS 5% = R$ 81,05) + ICMS R$1 (comércio) / ISS R$5 (serviço)
+  var valor, comp;
+  if(dados.setor==='servico'){ valor=86.05; comp="INSS R$ 81,05 + ISS R$ 5,00"; }
+  else { valor=82.05; comp="INSS R$ 81,05 + ICMS R$ 1,00"; }
+  return { valor:valor, bd:[["DAS-MEI fixo mensal",comp]] };
+}
 function calcSimples(){
   var fatMes=dados.faturamento, rbt12=fatMes*12;
   if(rbt12>4800000) return null;
