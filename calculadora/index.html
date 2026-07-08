@@ -167,7 +167,6 @@ input:focus,select:focus{outline:none;border-color:var(--verde)}
         <div class="opt" data-v="sim"><span class="dot"></span><div>Sim, já tenho CNPJ<small>Quero saber se estou no regime certo</small></div></div>
         <div class="opt" data-v="nao"><span class="dot"></span><div>Ainda não, vou abrir<small>Quero começar no regime mais econômico</small></div></div>
       </div>
-      <button class="btn" id="b1" disabled onclick="next(2)">Continuar</button>
     </div>
 
     <!-- ETAPA 2: setor/atividade -->
@@ -179,11 +178,6 @@ input:focus,select:focus{outline:none;border-color:var(--verde)}
         <div class="opt" data-v="comercio" data-tipo="comercio"><span class="ico">🛒</span><span class="dot"></span><div>Comércio / Loja<small>Venda de produtos, varejo, e-commerce</small></div></div>
         <div class="opt" data-v="industria" data-tipo="comercio"><span class="ico">🏭</span><span class="dot"></span><div>Indústria / Produção<small>Fabricação e transformação de produtos</small></div></div>
       </div>
-      <label for="profissao" id="profLabel" style="display:none">Especifique (opcional)</label>
-      <select id="profissao" style="display:none">
-        <option value="">Selecione sua atividade principal</option>
-      </select>
-      <button class="btn" id="b2" disabled onclick="next(3)">Continuar</button>
       <button class="back" onclick="next(1)">← Voltar</button>
     </div>
 
@@ -201,22 +195,16 @@ input:focus,select:focus{outline:none;border-color:var(--verde)}
         <div class="hint">Salários, pró-labore e encargos. Usado no <b>Fator R</b> — pode reduzir muito seu imposto no Simples.</div>
       </div>
 
-      <div class="two">
-        <div>
-          <label>Estado (UF)</label>
-          <select id="uf"><option value="PB" selected>Paraíba (PB)</option></select>
-        </div>
-        <div>
-          <label>ISS do município</label>
-          <select id="iss">
-            <option value="0.05" selected>5% (padrão)</option>
-            <option value="0.02">2%</option>
-            <option value="0.03">3%</option>
-            <option value="0.04">4%</option>
-          </select>
-        </div>
-      </div>
-      <div class="hint">O ISS varia por cidade. Se não souber, deixe no padrão.</div>
+      <label>Cidade da empresa</label>
+      <select id="cidade" onchange="onCidade()">
+        <option value="">Selecione sua cidade</option>
+        <option value="joao-pessoa">João Pessoa</option>
+        <option value="cabedelo">Cabedelo</option>
+        <option value="bayeux">Bayeux</option>
+        <option value="santa-rita">Santa Rita</option>
+        <option value="outra">Outra cidade da Paraíba</option>
+      </select>
+      <div class="hint" id="issHint">O ISS do seu município é aplicado automaticamente no cálculo.</div>
 
       <button class="btn" id="b3" disabled onclick="next(4)">Ver quanto posso economizar</button>
       <button class="back" onclick="next(2)">← Voltar</button>
@@ -258,14 +246,17 @@ input:focus,select:focus{outline:none;border-color:var(--verde)}
 
 <script>
 // ================= ESTADO =================
-var dados = { temEmpresa:null, setor:null, tipo:null, profissao:"", faturamento:0, folha:0, uf:"PB", iss:0.05, nome:"", whatsapp:"" };
+var dados = { temEmpresa:null, setor:null, tipo:null, cidade:"", cidadeNome:"", faturamento:0, folha:0, iss:0.05, nome:"", whatsapp:"" };
 var WA = "https://wa.me/558398719090?text=";
 
-// atividades por setor (para o select "especifique")
-var ATIVIDADES = {
-  servico:["Área da saúde (médico, dentista, fisio...)","Consultoria / Assessoria","Tecnologia / TI / Software","Engenharia / Arquitetura","Advocacia / Jurídico","Marketing / Publicidade / Agência","Educação / Cursos","Beleza / Estética","Outros serviços"],
-  comercio:["Loja física / Varejo","E-commerce / Loja online","Distribuidora / Atacado","Outros comércios"],
-  industria:["Indústria alimentícia","Confecção / Têxtil","Fabricação em geral","Outras indústrias"]
+// ISS por cidade da Grande João Pessoa (alíquota padrão de serviços)
+// Fonte: legislação municipal — JP art. 177 LC 53/08 = 5%. Demais cidades: alíquota geral usual.
+var ISS_CIDADE = {
+  "joao-pessoa":{ nome:"João Pessoa", iss:0.05 },
+  "cabedelo":{ nome:"Cabedelo", iss:0.05 },
+  "bayeux":{ nome:"Bayeux", iss:0.05 },
+  "santa-rita":{ nome:"Santa Rita", iss:0.05 },
+  "outra":{ nome:"Paraíba", iss:0.05 }
 };
 
 // ================= MÁSCARAS =================
@@ -279,28 +270,32 @@ function maskPhone(el){
   el.value=out; validate();
 }
 
-// ================= SELEÇÕES =================
+// ================= SELEÇÕES (clique avança automático) =================
 document.querySelectorAll('#temEmpresa .opt').forEach(function(o){
   o.addEventListener('click',function(){
     document.querySelectorAll('#temEmpresa .opt').forEach(x=>x.classList.remove('sel'));
-    o.classList.add('sel'); dados.temEmpresa=o.dataset.v; document.getElementById('b1').disabled=false;
+    o.classList.add('sel'); dados.temEmpresa=o.dataset.v;
+    setTimeout(function(){ next(2); }, 200); // avança sozinho
   });
 });
 document.querySelectorAll('#setor .opt').forEach(function(o){
   o.addEventListener('click',function(){
     document.querySelectorAll('#setor .opt').forEach(x=>x.classList.remove('sel'));
     o.classList.add('sel'); dados.setor=o.dataset.v; dados.tipo=o.dataset.tipo;
-    document.getElementById('b2').disabled=false;
-    // popular o select de atividade
-    var sel=document.getElementById('profissao'), lab=document.getElementById('profLabel');
-    sel.innerHTML='<option value="">Selecione sua atividade principal (opcional)</option>';
-    (ATIVIDADES[o.dataset.v]||[]).forEach(function(a){ var op=document.createElement('option');op.value=a;op.textContent=a;sel.appendChild(op); });
-    sel.style.display='block'; lab.style.display='block';
     // folha só p/ serviço
     document.getElementById('folhaWrap').style.display=(o.dataset.v==='servico')?'block':'none';
+    setTimeout(function(){ next(3); }, 200); // avança sozinho
   });
 });
-document.getElementById('profissao').addEventListener('change',function(){ dados.profissao=this.value; });
+// cidade → ISS automático
+function onCidade(){
+  var v=document.getElementById('cidade').value;
+  dados.cidade=v;
+  if(ISS_CIDADE[v]){ dados.iss=ISS_CIDADE[v].iss; dados.cidadeNome=ISS_CIDADE[v].nome;
+    document.getElementById('issHint').innerHTML='ISS de <b>'+ISS_CIDADE[v].nome+'</b> aplicado automaticamente: <b>'+(dados.iss*100)+'%</b>.';
+  }
+  validate();
+}
 
 // ================= NAVEGAÇÃO =================
 function next(n){
@@ -311,7 +306,9 @@ function next(n){
   validate(); window.scrollTo({top:0,behavior:'smooth'});
 }
 function validate(){
-  document.getElementById('b3').disabled = !(parseMoney(document.getElementById('faturamento'))>0);
+  var fatOk = parseMoney(document.getElementById('faturamento'))>0;
+  var cidadeOk = !!document.getElementById('cidade').value;
+  document.getElementById('b3').disabled = !(fatOk && cidadeOk);
   var nome=(document.getElementById('nome').value||'').trim();
   var wpp=onlyNum(document.getElementById('whatsapp').value);
   document.getElementById('b4').disabled = !(nome.length>=2 && wpp.length>=10);
@@ -358,12 +355,11 @@ function calcPresumido(){
 function finish(){
   dados.faturamento=parseMoney(document.getElementById('faturamento'));
   dados.folha=parseMoney(document.getElementById('folha'));
-  dados.iss=parseFloat(document.getElementById('iss').value);
   dados.nome=document.getElementById('nome').value.trim();
   dados.whatsapp=document.getElementById('whatsapp').value.trim();
 
   window.dataLayer=window.dataLayer||[];
-  window.dataLayer.push({event:'calculadora_lead',setor:dados.setor,faturamento:dados.faturamento,tem_empresa:dados.temEmpresa});
+  window.dataLayer.push({event:'calculadora_lead',setor:dados.setor,cidade:dados.cidade,faturamento:dados.faturamento,tem_empresa:dados.temEmpresa});
 
   var fatAno=dados.faturamento*12, lista=[];
   var mei=calcMEI(fatAno); if(mei) lista.push({nome:"MEI",sub:"Microempreendedor Individual",valor:mei.valor,bd:mei.bd});
@@ -393,7 +389,7 @@ function finish(){
 
   document.getElementById('r-cta-name').textContent = dados.nome ? (dados.nome.split(' ')[0]+', quer garantir essa economia?') : 'Quer garantir essa economia?';
   var msg="Ol%C3%A1!%20Fiz%20a%20simula%C3%A7%C3%A3o%20na%20calculadora%20da%20FPN.%20Sou%20"+encodeURIComponent(dados.nome)+
-    "%2C%20"+encodeURIComponent(dados.setor)+(dados.profissao?("%20("+encodeURIComponent(dados.profissao)+")"):"")+
+    "%2C%20"+encodeURIComponent(dados.setor)+"%20em%20"+encodeURIComponent(dados.cidadeNome||"")+
     "%2C%20faturamento%20~"+encodeURIComponent("R$ "+dados.faturamento.toLocaleString('pt-BR'))+
     ".%20Quero%20a%20an%C3%A1lise%20tribut%C3%A1ria%20completa.";
   document.getElementById('r-wa').href=WA+msg;
